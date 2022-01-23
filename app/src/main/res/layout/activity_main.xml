@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient_blue"
+    app:layoutDescription="@xml/activity_main_scene"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/info_fragment_show_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_info_details"
+        app:layout_constraintBottom_toBottomOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/divider"></ImageView>
+
+    <Button
+        android:id="@+id/findResistor"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/find_resistor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></Button>
+
+    <Button
+        android:id="@+id/divider"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/divider"
+        app:layout_constraintStart_toEndOf="@+id/findResistor"
+        app:layout_constraintTop_toTopOf="@+id/findResistor"></Button>
+
+
+    <FrameLayout
+        android:id="@+id/fragment_container_for_current"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:background="@drawable/background_corner_rounded"
+        app:layout_constraintTop_toBottomOf="@+id/findResistor"
+        tools:layout_editor_absoluteX="5dp"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_protocol"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_corner_rounded"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"
+        tools:layout_editor_absoluteX="5dp"></FrameLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

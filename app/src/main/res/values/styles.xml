@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Activity's -->
+    <style name="TitelText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">25dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">24dp</item>
+    </style>
+
+    <style name="HighlightedText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">25dp</item>
+    </style>
+
+    <style name="TextBody" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">15dp</item>
+        <item name="android:paddingBottom">16dp</item>
+
+    </style>
+
+
+    <style name="DialogBoxTextBody" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+</resources>
