@@ -83,13 +83,12 @@ public class FragmentDividerModel extends ViewModel {
             public void run() {
 
                 currentSolutionShown.postValue("Suche....");
+                indexOfSolutionCurrentlyShown = 0;
+                result = Divider.findResistors(vIn, vOut);
 
                 // If a previous calc. is in progress, this prevents that the earliest result found
                 // is overwritten.
                 if (timestamp == timestampOfLastCalc) {
-
-                    indexOfSolutionCurrentlyShown = 0;
-                    result = Divider.findResistors(vIn, vOut);
 
                     currentSolutionShown.postValue(
                             buildSolutiontext(result.getSolutionWsmallestErrInOutputVoltage()));
@@ -106,28 +105,32 @@ public class FragmentDividerModel extends ViewModel {
      * Shows the next available solution-
      */
     public void getAndShowNextSolution() {
-        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() && result.getListOfResults().size()!=0)
+        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() && result.getListOfResults().size() != 0)
             indexOfSolutionCurrentlyShown++;
 
-        DividerResult r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
-
-        String nextSolution = buildSolutiontext(r);
-        currentSolutionShown.postValue(nextSolution);
-        numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+        DividerResult r=null;
+        if (result != null){
+            r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
+            String nextSolution = buildSolutiontext(r);
+            currentSolutionShown.postValue(nextSolution);
+            numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+        }
     }
 
     /**
      * Shows the previous available solution.
      */
-    public void  getPreviousSolution(){
+    public void getPreviousSolution() {
         if (indexOfSolutionCurrentlyShown > 0)
             indexOfSolutionCurrentlyShown--;
 
-        DividerResult r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
-
-        String nextSolution = buildSolutiontext(r);
-        currentSolutionShown.postValue(nextSolution);
-        numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+        DividerResult r=null;
+        if (result != null) {
+            r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
+            String nextSolution = buildSolutiontext(r);
+            currentSolutionShown.postValue(nextSolution);
+            numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+        }
     }
 
     /**
@@ -148,7 +151,7 @@ public class FragmentDividerModel extends ViewModel {
                 Long timstampSolAvailable = System.currentTimeMillis();
 
                 double durationOfCalcInSeconds = (timstampSolAvailable - timestampOfLastCalc) / 1000;
-                
+
                 //DividerResult bestResult = result.getSolutionWsmallestErrInOutputVoltage();
                 solution.append(
                         "R1=" + r.getR1_V() + " Ohm (E" + r.getR1FoundInSeries() + ")\n" +
