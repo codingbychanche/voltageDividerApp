@@ -7,9 +7,9 @@
     <string name="divider">Spanungs Teiler</string>
 
     <!-- Fragment find resistor -->
-    <string name="titel_find_resistor">Standart Wiederstand finden</string>
+    <string name="titel_find_resistor">Standard Wiederstand finden</string>
     <string name="input_resistor_value_hint">Wiederstand [Ohm]</string>
-    <string name="output_standard_res_value_and_series">Standart Wiederstand/ E- Reihe</string>
+    <string name="output_standard_res_value_and_series">Standard Wiederstand/ E- Reihe</string>
     <string name="input_error_in_percent_hint">Zugelassene Abw. in %</string>
     <string name="calc_button">Finde...</string>
     <string name="solution_count_hint">Gefundene Löungen....</string>
