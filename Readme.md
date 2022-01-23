@@ -13,7 +13,7 @@ Find any standard resistor value. Value closest and series in which it was found
 
 ![](screenshots/divider.png)
 
-Find best solution for R1 and R2 of an voltage divider. Resistors, resulting output voltage and errors are displayed. It is possible to browse through all solutions found.
+Find best solution for R1 and R2 of a voltage divider. Resistors, resulting output voltage and errors are displayed. It is possible to browse through all solutions found.
 
 
 Have fun.
