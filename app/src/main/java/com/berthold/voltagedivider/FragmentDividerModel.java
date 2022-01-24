@@ -28,7 +28,7 @@ public class FragmentDividerModel extends ViewModel {
     //
     // This is an unique identifier for each thread
     // trying to find a solution for a voltage divider.
-    public long timestampOfLastCalc;
+    public long timestampOfLastCalc,timeStampSolAvailable;
 
     //
     // The found solution.
@@ -89,12 +89,18 @@ public class FragmentDividerModel extends ViewModel {
                 // If a previous calc. is in progress, this prevents that the earliest result found
                 // is overwritten.
                 if (timestamp == timestampOfLastCalc) {
+                    timeStampSolAvailable = System.currentTimeMillis();
 
-                    currentSolutionShown.postValue(
-                            buildSolutiontext(result.getSolutionWsmallestErrInOutputVoltage()));
-
-                    numberOfSolAndIndexOfCurrentlyShown.postValue(
-                            buildNumberOfSolFoundAndIndexOfCurrent(result));
+                    if (result.hasResult()) {
+                        currentSolutionShown.postValue(
+                                // Todo Why does result.getBest... not work????
+                                buildSolutiontext(result.getListOfResults().get(0))); // Best Result always on Top!
+                        numberOfSolAndIndexOfCurrentlyShown.postValue(
+                                buildNumberOfSolFoundAndIndexOfCurrent(result));
+                    } else {
+                        currentSolutionShown.postValue("Keine Lösung");
+                        numberOfSolAndIndexOfCurrentlyShown.postValue("0");
+                    }
                 }
             }
         });
@@ -105,7 +111,7 @@ public class FragmentDividerModel extends ViewModel {
      * Shows the next available solution-
      */
     public void getAndShowNextSolution() {
-        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() && result.getListOfResults().size() != 0)
+        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size()-1 && result.getListOfResults().size() != 0)
             indexOfSolutionCurrentlyShown++;
 
         DividerResult r=null;
@@ -148,16 +154,13 @@ public class FragmentDividerModel extends ViewModel {
 
             if (result.hasResult()) {
 
-                Long timstampSolAvailable = System.currentTimeMillis();
-
-                double durationOfCalcInSeconds = (timstampSolAvailable - timestampOfLastCalc) / 1000;
-
-                //DividerResult bestResult = result.getSolutionWsmallestErrInOutputVoltage();
+                double durationOfCalcInSeconds = (timeStampSolAvailable - timestampOfLastCalc)/1000 ;
+                
                 solution.append(
                         "R1=" + r.getR1_V() + " Ohm (E" + r.getR1FoundInSeries() + ")\n" +
                                 "R2=" + r.getR2_V() + " Ohm (E" + r.getR2FoundInSeries() + ")\n" +
                                 "Vout=" + r.getvOutCalc_V() + " V     Fehler:" +
-                                r.getActualErrorInOutputVoltage_P() + "%\n\n " +
+                                r.getActualErrorInOutputVoltage_P() + "%\n\n" +
                                 "Dauer:" + durationOfCalcInSeconds + " Sekunden");
                 solution.append("\n");
             } else
@@ -175,6 +178,6 @@ public class FragmentDividerModel extends ViewModel {
      * for the calculated divider and the index of the solution currently shown....
      */
     public String buildNumberOfSolFoundAndIndexOfCurrent(DividerResults r) {
-        return ("Zeige:" + indexOfSolutionCurrentlyShown + "/" + r.getListOfResults().size());
+        return ("Zeige:" + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size()-1));
     }
 }
