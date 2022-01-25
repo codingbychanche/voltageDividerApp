@@ -80,7 +80,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:background="#DEE1E3"
         app:layout_constraintBottom_toTopOf="@id/next_sol"
         app:layout_constraintStart_toStartOf="parent"

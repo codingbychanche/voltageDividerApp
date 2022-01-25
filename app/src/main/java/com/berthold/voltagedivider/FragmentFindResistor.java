@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -85,11 +86,11 @@ public class FragmentFindResistor extends Fragment {
             @Override
             public void onChanged(String s) {
 
-                standardValueAndSeriesView.setText(s);
+                standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s,0));
 
                 // Protocol output
-                String sol="Gesucht:"+resitorValueInputView.getText().toString()+" Ohm. zul. abw.:"+errorInPercentView.getText()+"%\n";
-                mainViewModel.protokollOutput.setValue(sol+"="+s);
+                String sol="<b><u>Gesucht:"+resitorValueInputView.getText().toString()+" Ohm. zul. abw.:"+errorInPercentView.getText()+"%</b></u><br>";
+                mainViewModel.protokollOutput.setValue(sol+"="+s+"<p>");
             }
         });
     }

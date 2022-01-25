@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -111,8 +112,8 @@ public class FragmentDivider extends Fragment {
         fragmentDividerModel.getCurrentSolutionShown().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s){
-                dividerResultView.setText(s);
-                mainViewModel.protokollOutput.setValue(s);
+                dividerResultView.setText(HtmlCompat.fromHtml(s,0));
+                mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
             }
         });
 

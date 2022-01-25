@@ -1,5 +1,6 @@
 package com.berthold.voltagedivider;
 
+import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -25,7 +26,7 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<String> getProtokollOutput(){
         if (protokollOutput==null) {
             protokollOutput = new MutableLiveData<String>();
-            protokollOutput.setValue("Protocol.....");
+            protokollOutput.setValue(HTMLTools.makeHeader("Protokollierung gestartet......<p>"));
         }
         return protokollOutput;
     }

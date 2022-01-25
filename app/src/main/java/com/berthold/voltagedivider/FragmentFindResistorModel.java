@@ -13,7 +13,6 @@ public class FragmentFindResistorModel extends ViewModel {
     //
     public String resistorToBeFoundInput,errorInput;
 
-
     //
     // The found solution.
     //

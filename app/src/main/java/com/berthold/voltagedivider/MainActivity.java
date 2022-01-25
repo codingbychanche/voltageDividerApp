@@ -1,5 +1,6 @@
 package com.berthold.voltagedivider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,23 +9,26 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public MainViewModel mainViewModel;
     // Debug
     private String tag;
-
-    // View model
-    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         // Debug
         tag = getClass().getSimpleName();
         Long time = System.currentTimeMillis();
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
@@ -55,20 +61,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       ImageView showInfo=findViewById(R.id.info_fragment_show_info);
-       showInfo.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               if (!mainViewModel.currentGFragmentShown.getValue().equals("Info"))
-                   mainViewModel.currentGFragmentShown.setValue("Info");
-           }
-       });
+        ImageView showInfo = findViewById(R.id.info_fragment_show_info);
+        showInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mainViewModel.currentGFragmentShown.getValue().equals("Info"))
+                    mainViewModel.currentGFragmentShown.setValue("Info");
+            }
+        });
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // View model and it's observers
+        TextView protocolView = findViewById(R.id.protocol_view);
         //
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        // clear the protocol view....
+        //
+        Button clearProtocol=findViewById(R.id.clear_protocol);
+        clearProtocol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                protocolView.setText("");
+            }
+        });
 
+        //
+        // Share the protocol...
+        //
+        Button shareProtocol=findViewById(R.id.share_protocol);
+        shareProtocol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+
+                sharingIntent.setType("text/html");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>"+protocolView.getText().toString()+"</p>"));
+                startActivity(Intent.createChooser(sharingIntent, "Share using"));
+            }
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Observers
         //
         // Gets and displays the current fragment (e.g. calculate voltage divider, find resistor)
         // inside the appropriate fragment container.
@@ -102,15 +132,14 @@ public class MainActivity extends AppCompatActivity {
         };
         mainViewModel.getCurrentGFragmentShown().observe(this, fragmentCurtlyShownObserver);
 
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Show protocol fragment
         //
-        if (savedInstanceState == null) {
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_protocol, FragmentProtocol.newInstance())
-                    .commitNow();
-        }
+        //  Updates the protocol view
+        //
+        mainViewModel.getProtokollOutput().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                protocolView.append(HtmlCompat.fromHtml(s,0));
+            }
+        });
     }
 }

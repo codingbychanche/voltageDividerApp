@@ -39,22 +39,46 @@
         app:layout_constraintStart_toEndOf="@+id/findResistor"
         app:layout_constraintTop_toTopOf="@+id/findResistor"></Button>
 
+    <ScrollView
+        android:id="@+id/scroll_protocoll"
+        android:background="@drawable/background_corner_rounded"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/share_protocol"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current">
+
+        <TextView
+            android:id="@+id/protocol_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"></TextView>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/clear_protocol"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_protol"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"></Button>
+
+    <Button
+        android:id="@+id/share_protocol"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></Button>
 
     <FrameLayout
         android:id="@+id/fragment_container_for_current"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="450dp"
         android:background="@drawable/background_corner_rounded"
         app:layout_constraintTop_toBottomOf="@+id/findResistor"
         tools:layout_editor_absoluteX="5dp"></FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment_protocol"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_corner_rounded"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"
-        tools:layout_editor_absoluteX="5dp"></FrameLayout>
 </androidx.constraintlayout.motion.widget.MotionLayout>

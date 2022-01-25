@@ -28,7 +28,7 @@ public class FragmentDividerModel extends ViewModel {
     //
     // This is an unique identifier for each thread
     // trying to find a solution for a voltage divider.
-    public long timestampOfLastCalc,timeStampSolAvailable;
+    public long timestampOfLastCalc, timeStampSolAvailable;
 
     //
     // The found solution.
@@ -82,7 +82,6 @@ public class FragmentDividerModel extends ViewModel {
             @Override
             public void run() {
 
-                currentSolutionShown.postValue("Suche....");
                 indexOfSolutionCurrentlyShown = 0;
                 result = Divider.findResistors(vIn, vOut);
 
@@ -93,8 +92,9 @@ public class FragmentDividerModel extends ViewModel {
 
                     if (result.hasResult()) {
                         currentSolutionShown.postValue(
-                                // Todo Why does result.getBest... not work????
-                                buildSolutiontext(result.getListOfResults().get(0))); // Best Result always on Top!
+                                buildSolutiontext(
+                                        result.getListOfResults().get(0))); // Best Result always on Top! Todo Why does result.getBest... not work????
+
                         numberOfSolAndIndexOfCurrentlyShown.postValue(
                                 buildNumberOfSolFoundAndIndexOfCurrent(result));
                     } else {
@@ -111,11 +111,11 @@ public class FragmentDividerModel extends ViewModel {
      * Shows the next available solution-
      */
     public void getAndShowNextSolution() {
-        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size()-1 && result.getListOfResults().size() != 0)
+        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() - 1 && result.getListOfResults().size() != 0)
             indexOfSolutionCurrentlyShown++;
 
-        DividerResult r=null;
-        if (result != null){
+        DividerResult r = null;
+        if (result != null) {
             r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
             String nextSolution = buildSolutiontext(r);
             currentSolutionShown.postValue(nextSolution);
@@ -130,7 +130,7 @@ public class FragmentDividerModel extends ViewModel {
         if (indexOfSolutionCurrentlyShown > 0)
             indexOfSolutionCurrentlyShown--;
 
-        DividerResult r=null;
+        DividerResult r = null;
         if (result != null) {
             r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
             String nextSolution = buildSolutiontext(r);
@@ -150,19 +150,19 @@ public class FragmentDividerModel extends ViewModel {
         StringBuilder solution = new StringBuilder();
 
         try {
-            solution.append("Vin=" + result.getInputVoltage_V() + "V     Vout=" + result.getOutputVoltage_V() + "V\n\n");
+            solution.append("<b><u>Vin=" + result.getInputVoltage_V() + "V     Vout=" + result.getOutputVoltage_V() + "V</b></u><br>");
 
             if (result.hasResult()) {
 
-                double durationOfCalcInSeconds = (timeStampSolAvailable - timestampOfLastCalc)/1000 ;
-                
+                double durationOfCalcInSeconds = (timeStampSolAvailable - timestampOfLastCalc) / 1000;
+
                 solution.append(
-                        "R1=" + r.getR1_V() + " Ohm (E" + r.getR1FoundInSeries() + ")\n" +
-                                "R2=" + r.getR2_V() + " Ohm (E" + r.getR2FoundInSeries() + ")\n" +
-                                "Vout=" + r.getvOutCalc_V() + " V     Fehler:" +
-                                r.getActualErrorInOutputVoltage_P() + "%\n\n" +
+                        "R1=" + r.getR1_V() + " Ohm (E" + r.getR1FoundInSeries() + ")<br>" +
+                                "R2=" + r.getR2_V() + " Ohm (E" + r.getR2FoundInSeries() + ")<br>" +
+                                "<i>Vout=" + r.getvOutCalc_V() + " V     Fehler:" +
+                                r.getActualErrorInOutputVoltage_P() + "%</i><br>" +
                                 "Dauer:" + durationOfCalcInSeconds + " Sekunden");
-                solution.append("\n");
+                solution.append("<p>");
             } else
                 solution.append("Keine Lösung gefunden.");
         } catch (NumberFormatException e) {
@@ -178,6 +178,6 @@ public class FragmentDividerModel extends ViewModel {
      * for the calculated divider and the index of the solution currently shown....
      */
     public String buildNumberOfSolFoundAndIndexOfCurrent(DividerResults r) {
-        return ("Zeige:" + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size()-1));
+        return ("Zeige:" + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
     }
 }
