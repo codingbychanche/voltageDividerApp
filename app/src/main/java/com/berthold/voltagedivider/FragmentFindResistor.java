@@ -24,10 +24,12 @@ public class FragmentFindResistor extends Fragment {
     // Debug
     private String tag;
 
+    // View model
+    private boolean isNewSolution; // Is true, if a new solution was found. This helps to preent the protocol view from beeing updated whn fragment is restarted....
+
     public static FragmentFindResistor newInstance() {
         return new FragmentFindResistor();
     }
-
 
     @Override
     public View onCreateView(
@@ -73,6 +75,7 @@ public class FragmentFindResistor extends Fragment {
                 fragmentFindResistorModel.errorInput=errorInPercentView.getText().toString();
 
                 // Find and show result
+                isNewSolution=true;
                 fragmentFindResistorModel.findRsistor(resitorValueInputView.getText().toString(),errorInPercentView.getText().toString());
             }
         });
@@ -89,8 +92,11 @@ public class FragmentFindResistor extends Fragment {
                 standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s,0));
 
                 // Protocol output
-                String sol="<b><u>Gesucht:"+resitorValueInputView.getText().toString()+" Ohm. zul. abw.:"+errorInPercentView.getText()+"%</b></u><br>";
-                mainViewModel.protokollOutput.setValue(sol+"="+s+"<p>");
+                if (isNewSolution) {
+                    String sol = "<b><u>Gesucht:" + resitorValueInputView.getText().toString() + " Ohm. zul. abw.:" + errorInPercentView.getText() + "%</b></u><br>";
+                    mainViewModel.protokollOutput.setValue(sol + "=" + s + "<p>");
+                    isNewSolution=false;
+                }
             }
         });
     }

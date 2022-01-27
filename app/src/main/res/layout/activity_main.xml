@@ -41,17 +41,18 @@
 
     <ScrollView
         android:id="@+id/scroll_protocoll"
-        android:background="@drawable/background_corner_rounded"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/share_protocol"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current">
+        android:background="@drawable/background_corner_rounded"
+        app:layout_constraintBottom_toBottomOf="@+id/protocol_to_clipboard"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"
+        tools:layout_editor_absoluteX="5dp">
 
         <TextView
             android:id="@+id/protocol_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/protocol_to_clipboard"
             app:layout_constraintEnd_toEndOf="parent"></TextView>
     </ScrollView>
 
@@ -61,9 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clear_protol"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></Button>
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/protocol_to_clipboard"></Button>
+<!--
     <Button
         android:id="@+id/share_protocol"
         style="?android:attr/buttonBarButtonStyle"
@@ -72,6 +73,16 @@
         android:text="@string/send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"></Button>
+        -->
+
+    <ImageButton
+        android:id="@+id/protocol_to_clipboard"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"></ImageButton>
 
     <FrameLayout
         android:id="@+id/fragment_container_for_current"

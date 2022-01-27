@@ -1,5 +1,7 @@
 package com.berthold.voltagedivider;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ShareCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -21,8 +24,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         //
         // Share the protocol...
         //
@@ -91,9 +97,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 
-                sharingIntent.setType("text/html");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>"+protocolView.getText().toString()+"</p>"));
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_TEXT,"<b>"+protocolView.getText().toString()+"\n");
                 startActivity(Intent.createChooser(sharingIntent, "Share using"));
+            }
+        });
+        */
+
+        //
+        // Put protocol to clipboard
+        //
+        ImageButton toClipBoard=findViewById(R.id.protocol_to_clipboard);
+        toClipBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label", protocolView.getText());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.to_clipboard),Toast.LENGTH_LONG).show();
             }
         });
 

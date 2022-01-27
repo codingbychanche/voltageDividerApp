@@ -6,6 +6,7 @@
     <string name="find_resistor">Wiederstand</string>
     <string name="divider">Spanungs Teiler</string>
 
+
     <!-- Fragment find resistor -->
     <string name="titel_find_resistor">Standard Wiederstand finden</string>
     <string name="input_resistor_value_hint">Wiederstand [Ohm]</string>
@@ -27,4 +28,5 @@
     <!-- Fragment Protocol -->
     <string name="clear_protol">Löschen</string>
     <string name="send">Teilen</string>
+    <string name="to_clipboard">Das Protokoll wurde in die Zwischenablage kopiert.</string>
 </resources>

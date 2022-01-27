@@ -23,6 +23,7 @@ public class FragmentDivider extends Fragment {
     // View model
     private MainViewModel mainViewModel;
     private FragmentDividerModel fragmentDividerModel;
+    private boolean isNewSolution;
 
     public static FragmentDivider newInstance() {
         return new FragmentDivider();
@@ -50,8 +51,8 @@ public class FragmentDivider extends Fragment {
         EditText vInView = view.findViewById(R.id.v_in);
         EditText vOutView = view.findViewById(R.id.v_out);
         TextView dividerResultView = view.findViewById(R.id.divider_result);
-        ProgressBar searchSolProgressView=view.findViewById(R.id.progress_searching_divider);
-        TextView solutionCounterView=view.findViewById(R.id.solution_counter);
+        ProgressBar searchSolProgressView = view.findViewById(R.id.progress_searching_divider);
+        TextView solutionCounterView = view.findViewById(R.id.solution_counter);
 
         //
         // restore input fields last values
@@ -68,16 +69,18 @@ public class FragmentDivider extends Fragment {
         solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String vIn=vInView.getText().toString();
-                String vOut=vOutView.getText().toString();
+                String vIn = vInView.getText().toString();
+                String vOut = vOutView.getText().toString();
 
                 // Store input fields
-                fragmentDividerModel.vIn=vIn;
-                fragmentDividerModel.vOut=vOut;
+                fragmentDividerModel.vIn = vIn;
+                fragmentDividerModel.vOut = vOut;
 
-                // Find solution...
-                Long timestamp=System.currentTimeMillis();
-                fragmentDividerModel.solveDividerForR1AndR2(vIn, vOut,timestamp);
+                // Find and display solution via the post methods
+                // invoke from inside the view model
+                isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocoll view...
+                Long timestamp = System.currentTimeMillis();
+                fragmentDividerModel.solveDividerForR1AndR2(vIn, vOut, timestamp);
             }
         });
 
@@ -88,6 +91,7 @@ public class FragmentDivider extends Fragment {
         nextSolView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isNewSolution=true;
                 fragmentDividerModel.getAndShowNextSolution();
             }
         });
@@ -98,7 +102,9 @@ public class FragmentDivider extends Fragment {
         Button lastSolView = view.findViewById(R.id.last_sol);
         lastSolView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                isNewSolution=true;
                 fragmentDividerModel.getPreviousSolution();
             }
         });
@@ -111,9 +117,13 @@ public class FragmentDivider extends Fragment {
         //
         fragmentDividerModel.getCurrentSolutionShown().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(String s){
-                dividerResultView.setText(HtmlCompat.fromHtml(s,0));
-                mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
+            public void onChanged(String s) {
+                dividerResultView.setText(HtmlCompat.fromHtml(s, 0));
+
+                if (isNewSolution) {
+                    mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
+                    isNewSolution=false;
+                }
             }
         });
 
@@ -122,7 +132,7 @@ public class FragmentDivider extends Fragment {
         //
         fragmentDividerModel.getNumberOfSolAndIndexOfCurrentlyShown().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(String s){
+            public void onChanged(String s) {
                 solutionCounterView.setText(s);
             }
         });
