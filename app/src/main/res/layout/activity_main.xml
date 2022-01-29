@@ -43,6 +43,7 @@
         android:id="@+id/scroll_protocoll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/background_corner_rounded"
         app:layout_constraintBottom_toBottomOf="@+id/protocol_to_clipboard"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"

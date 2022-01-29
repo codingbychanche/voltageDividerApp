@@ -2,7 +2,10 @@ package com.berthold.voltagedivider;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ShareCompat;
 import androidx.core.text.HtmlCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.Settings;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -29,11 +34,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentYesNoDialog.getDataFromFragment {
 
-    public MainViewModel mainViewModel;
     // Debug
     private String tag;
+
+    // View model
+    public MainViewModel mainViewModel;
+
+    // Shared
+    SharedPreferences sharedPreferences;
+
+    // Custom confirm dialog
+    private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_PERMISSIONS = 1;
+    private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +60,36 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+        //
+        // Check if there is a newer version of this app available at the play store.
+        //
+        if (showUpdateInfo()) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                    } catch (Exception e) {
+                    }
+
+                    String currentVersion = GetThisAppsVersion.thisVersion(getApplicationContext());
+                    String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay(getApplicationContext());
+
+                    if (!latestVersionInGooglePlay.equals(currentVersion)) {
+                        saveTimeUpdateInfoLastOpened();
+                        String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
+                        String ok = getResources().getString(R.string.do_update_confirm_button);
+                        String cancel = getResources().getString(R.string.no_udate_button);
+                        showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
+                    }
+                }
+            });
+            t.start();
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
+        //
         Button findResistorView = findViewById(R.id.findResistor);
         findResistorView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         //
         // clear the protocol view....
         //
-        Button clearProtocol=findViewById(R.id.clear_protocol);
+        Button clearProtocol = findViewById(R.id.clear_protocol);
         clearProtocol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,14 +149,14 @@ public class MainActivity extends AppCompatActivity {
         //
         // Put protocol to clipboard
         //
-        ImageButton toClipBoard=findViewById(R.id.protocol_to_clipboard);
+        ImageButton toClipBoard = findViewById(R.id.protocol_to_clipboard);
         toClipBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("label", protocolView.getText());
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.to_clipboard),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "..", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -159,8 +201,93 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getProtokollOutput().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                protocolView.append(HtmlCompat.fromHtml(s,0));
+                protocolView.append(HtmlCompat.fromHtml(s, 0));
             }
         });
+    }
+
+    /**
+     * Saves timestamp when update info was shown and
+     * a boolean set to true which tells us that the
+     * info has been shown at least once.
+     */
+    private void saveTimeUpdateInfoLastOpened() {
+        Long currentTime = System.currentTimeMillis();
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong("lastUpdateInfo", currentTime);
+        editor.putBoolean("hasBeenShownAtLastOnce", true);
+        editor.commit();
+    }
+
+    /**
+     * Checks if update info is allowed to be shown again.
+     *
+     * @return true if allowed, false if not.
+     */
+    private boolean showUpdateInfo() {
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+
+        // If the update info has not been shown at least once, then
+        // show it now, for the first time and as a result, also save the
+        // time last shown for the first time.
+        Boolean hasBeenShowedAtLeastOnce = sharedPreferences.getBoolean("hasBeenShownAtLastOnce", false);
+        if (!hasBeenShowedAtLeastOnce)
+            return true;    // Don't show
+
+        // Update info has been shown at least for one time. So check
+        // when this was and if enough time has passed to allow it
+        // to be shown again....
+        Long currentTime = System.currentTimeMillis();
+
+        // Time in Millisec. which has to be passed until update info is
+        // allowed to be shown again since the  last time it
+        // appeared on the screen;
+        int timeDiffUntilNextUpdateInfo = 8 * 60 * 60 * 1000; // Show once every eight hours.....
+
+        Long lastTimeOpened = sharedPreferences.getLong("lastUpdateInfo", currentTime);
+
+        Log.v("TIMETIME", " Last:" + lastTimeOpened + "   current:" + currentTime + "  Diff:" + (currentTime - lastTimeOpened));
+
+        if ((currentTime - lastTimeOpened) > timeDiffUntilNextUpdateInfo)
+            return true;    // Show
+        else
+            return false;   // Don't show
+    }
+
+    /**
+     * Shows a confirm dialog.
+     *
+     * @param reqCode
+     * @param kindOfDialog
+     * @param dialogText
+     * @param confirmButton
+     * @param cancelButton
+     */
+    private void showConfirmDialog(int reqCode, int kindOfDialog, String dialogText, String confirmButton, String cancelButton) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentYesNoDialog fragmentShowYesNo =
+                FragmentYesNoDialog.newInstance(reqCode, kindOfDialog, null, dialogText, confirmButton, cancelButton);
+        fragmentShowYesNo.show(fm, "fragment_dialog");
+    }
+
+    /**
+     * Callback for {@link FragmentYesNoDialog} events.
+     *
+     * @param reqCode
+     * @param dialogTextEntered
+     * @param buttonPressed
+     */
+    @Override
+    public void getDialogInput(int reqCode, String dialogTextEntered, String buttonPressed) {
+        //
+        // Update this app?
+        //
+        if (reqCode == CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE) {
+            if (buttonPressed.equals(FragmentYesNoDialog.BUTTON_OK_PRESSED)) {
+                Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.convertjobscheduletocalendar&hl=de"));
+                startActivity(openPlayStoreForUpdate);
+            }
+        }
     }
 }

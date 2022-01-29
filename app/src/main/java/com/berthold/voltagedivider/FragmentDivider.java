@@ -78,7 +78,7 @@ public class FragmentDivider extends Fragment {
 
                 // Find and display solution via the post methods
                 // invoke from inside the view model
-                isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocoll view...
+                isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocol view...
                 Long timestamp = System.currentTimeMillis();
                 fragmentDividerModel.solveDividerForR1AndR2(vIn, vOut, timestamp);
             }

@@ -2,10 +2,12 @@
     <string name="app_name">Spannungs Teiler</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Main -->
     <!-- Strings used for fragments for navigation -->
     <string name="find_resistor">Wiederstand</string>
     <string name="divider">Spanungs Teiler</string>
-
+    <string name="protocol_info">Protokolierung gestartet</string>
+    <string name="version_info_ok">Ihre App ist auf dem neuesten Stand.</string>
 
     <!-- Fragment find resistor -->
     <string name="titel_find_resistor">Standard Wiederstand finden</string>
@@ -29,4 +31,24 @@
     <string name="clear_protol">Löschen</string>
     <string name="send">Teilen</string>
     <string name="to_clipboard">Das Protokoll wurde in die Zwischenablage kopiert.</string>
+
+    <!-- Info fragment -->
+    <string name="version_info_update_available">Es ist eine neue Version dieser App verfügbar.</string>
+    <string name="version">Version:</string>
+
+    <string name="dialog_new_version_available">
+        <![CDATA[<p><b>Neue Version verfügbar</b></p>
+
+        <p>Im <i>Google Play Store</i> ist eine überarbeitete Version dieser <i>App</i> verfügbar.</p>
+
+        <p>Wenn Sie möchten, dann können sie von hier aus direkt in den <i>Google Play Store</i> wechseln und das Update durchführen.</p>
+
+        <p>Ihre Einstellung und gespeicherten Daten bleiben erhalten.</p>
+
+        Neue Version:]]>
+    </string>
+
+    <string name="do_update_confirm_button">Update</string>
+    <string name="no_udate_button">Nein,danke</string>
+
 </resources>

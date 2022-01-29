@@ -13,7 +13,6 @@
 
     <style name="TextBody" parent="TextAppearance.AppCompat">
         <item name="android:textSize">15dp</item>
-        <item name="android:paddingBottom">16dp</item>
 
     </style>
 

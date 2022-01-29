@@ -83,8 +83,11 @@ public class FragmentDividerModel extends ViewModel {
             public void run() {
 
                 indexOfSolutionCurrentlyShown = 0;
-                result = Divider.findResistors(vIn, vOut);
 
+                numberOfSolAndIndexOfCurrentlyShown
+                        .postValue("Suche......");
+                result = Divider.findResistors(vIn, vOut);
+                
                 // If a previous calc. is in progress, this prevents that the earliest result found
                 // is overwritten.
                 if (timestamp == timestampOfLastCalc) {
@@ -159,9 +162,8 @@ public class FragmentDividerModel extends ViewModel {
                 solution.append(
                         "R1=" + r.getR1_V() + " Ohm (E" + r.getR1FoundInSeries() + ")<br>" +
                                 "R2=" + r.getR2_V() + " Ohm (E" + r.getR2FoundInSeries() + ")<br>" +
-                                "<i>Vout=" + r.getvOutCalc_V() + " V     Fehler:" +
-                                r.getActualErrorInOutputVoltage_P() + "%</i><br>" +
-                                "Dauer:" + durationOfCalcInSeconds + " Sekunden");
+                                "<i>Vout=" + r.getvOutCalc_V() + " V     Error:" +
+                                r.getActualErrorInOutputVoltage_P() + "%</i><br>");
                 solution.append("<p>");
             } else
                 solution.append("Keine Lösung gefunden.");

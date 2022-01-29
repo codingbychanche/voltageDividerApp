@@ -1,5 +1,6 @@
 package com.berthold.voltagedivider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,8 @@ public class FragmentInfo extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Context context=getActivity().getApplicationContext();
+
         //
         // UI
         //
@@ -69,15 +72,35 @@ public class FragmentInfo extends Fragment {
         progress=view.findViewById(R.id.html_load_progress);
 
         //
+        // View Model
+        //
+        MainViewModel mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
+
+        //
         // Load html from assets- folder
         //
         progress.setVisibility(View.VISIBLE);
+
+        // Get current App- version from Google play
+        // Check if there is an update available
+        currentVersion =GetThisAppsVersion.thisVersion(context);
+        String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay (context);
+
+        updateInfoView.setText(getResources().getString(R.string.version)+currentVersion+"\n");
+        if (latestVersionInGooglePlay.equals(currentVersion)) {
+            //updateInfoView.setText(getResources().getText(R.string.version_info_is_latest_version));
+            updateInfoView.append(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_ok) + "", 0));
+        } else
+            updateInfoView.append(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available) + latestVersionInGooglePlay, 0));
 
 
         // @rem:Get current locale (determine language from Androids settings@@
         //final Locale current=getResources().getConfiguration().locale;
         final String current = getResources().getConfiguration().locale.getLanguage();
 
+        //
+        // Load according to locale
+        //
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
