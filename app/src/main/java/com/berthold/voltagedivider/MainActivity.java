@@ -45,10 +45,15 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
     // Shared
     SharedPreferences sharedPreferences;
 
-    // Custom confirm dialog
+    // Yes No Dialog
     private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_PERMISSIONS = 1;
     private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE = 2;
 
+    /**
+     * Let there be light....
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,17 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         tag = getClass().getSimpleName();
         Long time = System.currentTimeMillis();
 
+        //
+        // View model
+        //
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        //
+        // Locale for use in view models
+        //
+        Locale loc=new Locale();
+        loc.setProtocolStartText(getApplicationContext().getResources().getString(R.string.protocol_start_text));
+        mainViewModel.loc=loc;
 
         //
         // Check if there is a newer version of this app available at the play store.
@@ -202,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
             @Override
             public void onChanged(String s) {
                 protocolView.append(HtmlCompat.fromHtml(s, 0));
+                Log.v("CONTEXT_",s+"=");
             }
         });
     }

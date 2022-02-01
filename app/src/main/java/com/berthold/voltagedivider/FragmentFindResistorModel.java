@@ -9,6 +9,11 @@ import VoltageDiv.ResistorResult;
 public class FragmentFindResistorModel extends ViewModel {
 
     //
+    // Locale
+    //
+    Locale loc;
+
+    //
     // The input
     //
     public String resistorToBeFoundInput,errorInput;
@@ -36,12 +41,11 @@ public class FragmentFindResistorModel extends ViewModel {
             ResistorResult rFound=GetResistors.getRValueClosestTo(r,e);
 
             if (rFound.found()) {
-                String solution = rFound.getFoundResistorValue_Ohms() + " Ohm" + " E" + rFound.getBelongsToESeries() + "   " + rFound.getActualError_P() + "% abw.";
+                String solution = rFound.getFoundResistorValue_Ohms() + " Ohm" + " E" + rFound.getBelongsToESeries() + "   " + rFound.getActualError_P() + "%";
                 resistorValuefoundInAnyOfTheESeries_Ohm.setValue(solution);
             } else
-                resistorValuefoundInAnyOfTheESeries_Ohm.setValue("Nicht gefunden");
+                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(loc.getNoSolutionFound());
 
         } catch (NumberFormatException e){}
     }
-
 }

@@ -43,40 +43,49 @@ public class FragmentFindResistor extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //
         // View Model's
+        //
         MainViewModel mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
-        FragmentFindResistorModel fragmentFindResistorModel=ViewModelProviders.of(requireActivity()).get(FragmentFindResistorModel.class);
+        FragmentFindResistorModel fragmentFindResistorModel = ViewModelProviders.of(requireActivity()).get(FragmentFindResistorModel.class);
+
+        //
+        // Locale for use in view models
+        //
+        Locale loc = new Locale();
+        loc.noSolutionFoundText = requireActivity().getResources().getString(R.string.no_solution);
+        fragmentFindResistorModel.loc = loc;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
         //
-        EditText resitorValueInputView= view.findViewById(R.id.resistor_value);
-        EditText errorInPercentView=view.findViewById(R.id.tolerable_error_in_p);
-        TextView standardValueAndSeriesView=view.findViewById(R.id.standard_value_and_series);
+        EditText resitorValueInputView = view.findViewById(R.id.resistor_value);
+        EditText errorInPercentView = view.findViewById(R.id.tolerable_error_in_p);
+        TextView standardValueAndSeriesView = view.findViewById(R.id.standard_value_and_series);
 
         //
         // Restore the last input value in any of the edit text fields....
         //
-        if(fragmentFindResistorModel.resistorToBeFoundInput!=null)
+        if (fragmentFindResistorModel.resistorToBeFoundInput != null)
             resitorValueInputView.setText(fragmentFindResistorModel.resistorToBeFoundInput);
 
-        if(fragmentFindResistorModel.errorInput!=null)
-           errorInPercentView.setText(fragmentFindResistorModel.errorInput);
+        if (fragmentFindResistorModel.errorInput != null)
+            errorInPercentView.setText(fragmentFindResistorModel.errorInput);
 
         //
         // Search resistor.
         //
-        Button findResistorView=view.findViewById(R.id.calc);
+        Button findResistorView = view.findViewById(R.id.calc);
         findResistorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Save input value's
-                fragmentFindResistorModel.resistorToBeFoundInput=resitorValueInputView.getText().toString();
-                fragmentFindResistorModel.errorInput=errorInPercentView.getText().toString();
+                fragmentFindResistorModel.resistorToBeFoundInput = resitorValueInputView.getText().toString();
+                fragmentFindResistorModel.errorInput = errorInPercentView.getText().toString();
 
                 // Find and show result
-                isNewSolution=true;
-                fragmentFindResistorModel.findRsistor(resitorValueInputView.getText().toString(),errorInPercentView.getText().toString());
+                isNewSolution = true;
+                fragmentFindResistorModel.findRsistor(resitorValueInputView.getText().toString(), errorInPercentView.getText().toString());
             }
         });
 
@@ -85,17 +94,21 @@ public class FragmentFindResistor extends Fragment {
         //
         // Displays the result, the standard value of the resistor found...
         //
-       fragmentFindResistorModel.getResistorValuefoundInAnyOfTheESeries_Ohm().observe(getViewLifecycleOwner(), new Observer<String>() {
+        fragmentFindResistorModel.getResistorValuefoundInAnyOfTheESeries_Ohm().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
 
-                standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s,0));
+                standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s, 0));
 
                 // Protocol output
                 if (isNewSolution) {
-                    String sol = "<b><u>Gesucht:" + resitorValueInputView.getText().toString() + " Ohm. zul. abw.:" + errorInPercentView.getText() + "%</b></u><br>";
+                    String sol = "<b><u>" + getResources().getString(R.string.searched_was_text)+" "
+                            + resitorValueInputView.getText().toString() + " Ohm. " +
+                            getResources().getString(R.string.allowed_deviation)+":"
+                            + errorInPercentView.getText() + "%</b></u><br>";
+
                     mainViewModel.protokollOutput.setValue(sol + "=" + s + "<p>");
-                    isNewSolution=false;
+                    isNewSolution = false;
                 }
             }
         });

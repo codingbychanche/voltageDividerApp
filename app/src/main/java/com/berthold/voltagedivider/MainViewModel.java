@@ -9,6 +9,10 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends ViewModel {
 
+    //
+    // Locale
+    //
+    public Locale loc;
 
     //
     // The current fragment shown inside the container (e.g. find resistor, divider wtc......)
@@ -30,7 +34,7 @@ public class MainViewModel extends ViewModel {
     public MutableLiveData<String> getProtokollOutput(){
         if (protokollOutput==null) {
             protokollOutput = new MutableLiveData<String>();
-            protokollOutput.setValue(HTMLTools.makeHeader("Protokolierung......"));
+            protokollOutput.setValue(HTMLTools.makeHeader(loc.getProtocolStartText()));
 
         }
         return protokollOutput;
@@ -53,5 +57,4 @@ public class MainViewModel extends ViewModel {
         }
         return latest;
     }
-
 }

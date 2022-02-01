@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Spannungs Teiler</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <!-- String literals used in suorce code, inside the view models which have no access to Android resources....-->
+    <string name="protocol_start_text">Protokoll.......</string>
+    <string name="no_solution">Keine Lösung gefunden....</string>
+    <string name="searching">Suche.....</string>
+    <string name="showing">Zeige</string>
 
     <!-- Main -->
     <!-- Strings used for fragments for navigation -->
@@ -14,17 +19,19 @@
     <string name="input_resistor_value_hint">Wiederstand [Ohm]</string>
     <string name="output_standard_res_value_and_series">Standard Wiederstand/ E- Reihe</string>
     <string name="input_error_in_percent_hint">Zugelassene Abw. in %</string>
+    <string name="allowed_deviation">zugelassene Abweichung</string>
     <string name="calc_button">Finde...</string>
+    <string name="searched_was_text">Gesucht wurde</string>
     <string name="solution_count_hint">Gefundene Löungen....</string>
 
     <!-- Fragment Divider -->
     <string name="titel_divider">Spannungsteiler</string>
-    <string name="vin_hint">Vin [Volt]</string>
-    <string name="vout_hint">Vout [Volt]</string>
+    <string name="vin_hint" translatable="false">Vin [Volt]</string>
+    <string name="vout_hint" translatable="false">Vout [Volt]</string>
     <string name="error_r2_hint">R2 [Ohm], zulässige abw. %</string>
     <string name="solve">Lösen</string>
-    <string name="show_next_sol">+</string>
-    <string name="show_last_sol">-</string>
+    <string name="show_next_sol" translatable="false">+</string>
+    <string name="show_last_sol" translatable="false">-</string>
     <string name="solution_hint">Lösung......</string>
 
     <!-- Fragment Protocol -->
@@ -34,9 +41,9 @@
 
     <!-- Info fragment -->
     <string name="version_info_update_available">Es ist eine neue Version dieser App verfügbar.</string>
-    <string name="version">Version:</string>
+    <string name="version" translatable="false">Version:</string>
 
-    <string name="dialog_new_version_available">
+    <string name="dialog_new_version_available" translatable="false">
         <![CDATA[<p><b>Neue Version verfügbar</b></p>
 
         <p>Im <i>Google Play Store</i> ist eine überarbeitete Version dieser <i>App</i> verfügbar.</p>
@@ -48,7 +55,8 @@
         Neue Version:]]>
     </string>
 
-    <string name="do_update_confirm_button">Update</string>
-    <string name="no_udate_button">Nein,danke</string>
+    <string name="do_update_confirm_button" translatable="false">Update</string>
+    <string name="no_udate_button" translatable="false">Nein,danke</string>
+    <string name="app_name">Spannungsteiler</string>
 
 </resources>

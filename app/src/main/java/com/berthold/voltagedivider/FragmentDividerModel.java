@@ -15,6 +15,9 @@ import VoltageDiv.DividerResults;
  */
 public class FragmentDividerModel extends ViewModel {
 
+    // Locale
+    Locale loc;
+
     //
     // Index of the solution currently shown
     //
@@ -85,7 +88,7 @@ public class FragmentDividerModel extends ViewModel {
                 indexOfSolutionCurrentlyShown = 0;
 
                 numberOfSolAndIndexOfCurrentlyShown
-                        .postValue("Suche......");
+                        .postValue(loc.getSearchingText());
                 result = Divider.findResistors(vIn, vOut);
                 
                 // If a previous calc. is in progress, this prevents that the earliest result found
@@ -101,7 +104,7 @@ public class FragmentDividerModel extends ViewModel {
                         numberOfSolAndIndexOfCurrentlyShown.postValue(
                                 buildNumberOfSolFoundAndIndexOfCurrent(result));
                     } else {
-                        currentSolutionShown.postValue("Keine Lösung");
+                        currentSolutionShown.postValue(loc.getNoSolutionFound());
                         numberOfSolAndIndexOfCurrentlyShown.postValue("0");
                     }
                 }
@@ -166,7 +169,7 @@ public class FragmentDividerModel extends ViewModel {
                                 r.getActualErrorInOutputVoltage_P() + "%</i><br>");
                 solution.append("<p>");
             } else
-                solution.append("Keine Lösung gefunden.");
+                solution.append(loc.getNoSolutionFound());
         } catch (NumberFormatException e) {
         }
         return solution.toString();
@@ -180,6 +183,6 @@ public class FragmentDividerModel extends ViewModel {
      * for the calculated divider and the index of the solution currently shown....
      */
     public String buildNumberOfSolFoundAndIndexOfCurrent(DividerResults r) {
-        return ("Zeige:" + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
+        return (loc.getShowingText() +" "+ indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
     }
 }

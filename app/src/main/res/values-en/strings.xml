@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voltage Divider</string>
+    <string name="protocol_start_text">Protocol</string>
+    <string name="no_solution">No solution found</string>
+    <string name="searching">Searching....</string>
+    <string name="showing">Showing</string>
+    <string name="find_resistor">Resistor</string>
+    <string name="divider">Voltage Divider</string>
+    <string name="protocol_info">Protocol started</string>
+    <string name="version_info_ok">App is up to date</string>
+    <string name="titel_find_resistor">Find standard value</string>
+    <string name="input_resistor_value_hint">Resistance [Ohm]</string>
+    <string name="output_standard_res_value_and_series">Standard resistor/ E- Series</string>
+    <string name="input_error_in_percent_hint">Allowed deviation in %</string>
+    <string name="allowed_deviation">allowed deviation</string>
+    <string name="calc_button">Find...</string>
+    <string name="searched_was_text">Searched for</string>
+    <string name="solution_count_hint">Found solutions....</string>
+    <string name="titel_divider">Voltage Divider</string>
+    <string name="error_r2_hint">R2 [Ohm] allowed deviation %</string>
+    <string name="solve">Solve</string>
+    <string name="solution_hint">Solution...</string>
+    <string name="clear_protol">Delete</string>
+    <string name="to_clipboard">Copied to clipboard</string>
+    <string name="version_info_update_available">New version available.</string>
+    <string name="no_udate_button" translatable="false">No, thanks</string>
+</resources>

@@ -45,6 +45,13 @@ public class FragmentDivider extends Fragment {
         MainViewModel mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
         FragmentDividerModel fragmentDividerModel = ViewModelProviders.of(requireActivity()).get(FragmentDividerModel.class);
 
+        // Locale
+        Locale loc=new Locale();
+        loc.setSearchingText(requireActivity().getResources().getString(R.string.searching));
+        loc.setShowingText(requireActivity().getResources().getString(R.string.showing));
+        loc.setNoSolutionFoundText(requireActivity().getResources().getString(R.string.no_solution));
+        fragmentDividerModel.loc=loc;
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
         //
@@ -128,7 +135,7 @@ public class FragmentDivider extends Fragment {
         });
 
         //
-        // Displays addidional info about the result found...
+        // Displays additional info about the result found...
         //
         fragmentDividerModel.getNumberOfSolAndIndexOfCurrentlyShown().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
