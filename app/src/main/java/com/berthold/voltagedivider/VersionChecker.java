@@ -20,6 +20,7 @@ public class VersionChecker extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
 
+        // ToDO Change url when this app is available at the play store....
         try {
             newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "com.berthold.convertjobscheduletocalendar" + "&hl=de")
                     .timeout(30000)

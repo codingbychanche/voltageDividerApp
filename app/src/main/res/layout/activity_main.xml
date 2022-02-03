@@ -65,16 +65,16 @@
         android:text="@string/clear_protol"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/protocol_to_clipboard"></Button>
-<!--
-    <Button
-        android:id="@+id/share_protocol"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
-        -->
+    <!--
+        <Button
+            android:id="@+id/share_protocol"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></Button>
+            -->
 
     <ImageButton
         android:id="@+id/protocol_to_clipboard"

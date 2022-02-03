@@ -19,10 +19,18 @@
     <ImageView
         android:id="@+id/resistor_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200px"
+        android:adjustViewBounds="true"
         android:src="@drawable/resistor"
+
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:scaleType="fitCenter"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/resistor_value_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></ImageView>
+        app:layout_constraintTop_toTopOf="@+id/error_text_input_layout"></ImageView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/error_text_input_layout"
@@ -33,16 +41,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/resistor_view"
 
-        app:layout_constraintTop_toTopOf="@+id/resistor_view">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <EditText
             android:id="@+id/tolerable_error_in_p"
-            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:ems="50"
+            android:focusable="true"
             android:hint="@string/input_error_in_percent_hint"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -52,7 +60,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        app:layout_constraintBottom_toBottomOf="@+id/resistor_view"
         app:layout_constraintHorizontal_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
 
@@ -87,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calc_button"
-        app:layout_constraintTop_toBottomOf="@+id/resistor_view"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/resistor_value_layout"></Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

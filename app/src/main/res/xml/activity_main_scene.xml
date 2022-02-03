@@ -6,12 +6,20 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="2500">
+        motion:duration="2500"
+        motion:motionInterpolator="linear">
         <OnSwipe motion:dragDirection="dragUp"
-            motion:touchAnchorSide="bottom"/>
+            motion:touchAnchorSide="top"/>
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:layout_height="10dp"
+            motion:layout_editor_absoluteX="25dp"
+            motion:layout_constraintBottom_toTopOf="@+id/scroll_protocoll"
+            android:layout_width="match_parent"
+            android:id="@+id/swipe_bar"
+            motion:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current" />
     </ConstraintSet>
 
 

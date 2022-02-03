@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("label", protocolView.getText());
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "..", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.to_clipboard), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -301,8 +301,10 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         //
         if (reqCode == CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE) {
             if (buttonPressed.equals(FragmentYesNoDialog.BUTTON_OK_PRESSED)) {
-                Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.convertjobscheduletocalendar&hl=de"));
-                startActivity(openPlayStoreForUpdate);
+
+                // ToDo: Add url when available in play store........
+                //Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.convertjobscheduletocalendar&hl=de"));
+                //startActivity(openPlayStoreForUpdate);
             }
         }
     }

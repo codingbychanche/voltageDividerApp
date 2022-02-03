@@ -72,9 +72,6 @@ public class FragmentDividerModel extends ViewModel {
      */
     public void solveDividerForR1AndR2(String vIn_V, String vOut_V, long timestamp) {
 
-        double vIn = Double.valueOf(vIn_V);
-        double vOut = Double.valueOf(vOut_V);
-
         // Unique idendifier for the last thread started....
         timestampOfLastCalc = timestamp;
 
@@ -85,28 +82,35 @@ public class FragmentDividerModel extends ViewModel {
             @Override
             public void run() {
 
-                indexOfSolutionCurrentlyShown = 0;
+                try {
+                    double vIn = Double.valueOf(vIn_V);
+                    double vOut = Double.valueOf(vOut_V);
 
-                numberOfSolAndIndexOfCurrentlyShown
-                        .postValue(loc.getSearchingText());
-                result = Divider.findResistors(vIn, vOut);
-                
-                // If a previous calc. is in progress, this prevents that the earliest result found
-                // is overwritten.
-                if (timestamp == timestampOfLastCalc) {
-                    timeStampSolAvailable = System.currentTimeMillis();
 
-                    if (result.hasResult()) {
-                        currentSolutionShown.postValue(
-                                buildSolutiontext(
-                                        result.getListOfResults().get(0))); // Best Result always on Top! Todo Why does result.getBest... not work????
+                    indexOfSolutionCurrentlyShown = 0;
 
-                        numberOfSolAndIndexOfCurrentlyShown.postValue(
-                                buildNumberOfSolFoundAndIndexOfCurrent(result));
-                    } else {
-                        currentSolutionShown.postValue(loc.getNoSolutionFound());
-                        numberOfSolAndIndexOfCurrentlyShown.postValue("0");
+                    numberOfSolAndIndexOfCurrentlyShown
+                            .postValue(loc.getSearchingText());
+                    result = Divider.findResistors(vIn, vOut);
+
+                    // If a previous calc. is in progress, this prevents that the earliest result found
+                    // is overwritten.
+                    if (timestamp == timestampOfLastCalc) {
+                        timeStampSolAvailable = System.currentTimeMillis();
+
+                        if (result.hasResult()) {
+                            currentSolutionShown.postValue(
+                                    buildSolutiontext(
+                                            result.getListOfResults().get(0))); // Best Result always on Top! Todo Why does result.getBest... not work????
+
+                            numberOfSolAndIndexOfCurrentlyShown.postValue(
+                                    buildNumberOfSolFoundAndIndexOfCurrent(result));
+                        } else {
+                            currentSolutionShown.postValue(loc.getNoSolutionFound());
+                            numberOfSolAndIndexOfCurrentlyShown.postValue("0");
+                        }
                     }
+                } catch (NumberFormatException e) {
                 }
             }
         });
@@ -183,6 +187,6 @@ public class FragmentDividerModel extends ViewModel {
      * for the calculated divider and the index of the solution currently shown....
      */
     public String buildNumberOfSolFoundAndIndexOfCurrent(DividerResults r) {
-        return (loc.getShowingText() +" "+ indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
+        return (loc.getShowingText() + " " + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
     }
 }

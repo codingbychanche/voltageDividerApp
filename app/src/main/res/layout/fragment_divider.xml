@@ -19,11 +19,19 @@
     <ImageView
         android:id="@+id/div"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/divider"
+
+        android:layout_height="200px"
+        android:adjustViewBounds="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scaleType="fitCenter"
+
+
+        android:src="@drawable/divider_schematic"
+        app:layout_constraintBottom_toBottomOf="@+id/vout_value_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/vin_value_layout"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/vin_value_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vin_value_layout"
@@ -33,7 +41,7 @@
         app:layout_constraintHorizontal_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/div"
-        app:layout_constraintTop_toTopOf="@+id/div">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <EditText
             android:id="@+id/v_in"
@@ -51,7 +59,6 @@
         android:id="@+id/vout_value_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/div"
         app:layout_constraintHorizontal_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/div"
@@ -71,10 +78,9 @@
         android:id="@+id/find_solution_for_divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/solve"
         app:layout_constraintStart_toStartOf="@+id/vout_value_layout"
-        app:layout_constraintTop_toBottomOf="@+id/div"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/vout_value_layout"></Button>
 
     <ScrollView
         android:id="@+id/scrollView2"

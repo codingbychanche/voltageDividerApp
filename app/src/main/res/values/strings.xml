@@ -43,7 +43,7 @@
     <string name="version_info_update_available">Es ist eine neue Version dieser App verfügbar.</string>
     <string name="version" translatable="false">Version:</string>
 
-    <string name="dialog_new_version_available" translatable="false">
+    <string name="dialog_new_version_available" translatable="true">
         <![CDATA[<p><b>Neue Version verfügbar</b></p>
 
         <p>Im <i>Google Play Store</i> ist eine überarbeitete Version dieser <i>App</i> verfügbar.</p>
@@ -56,7 +56,7 @@
     </string>
 
     <string name="do_update_confirm_button" translatable="false">Update</string>
-    <string name="no_udate_button" translatable="false">Nein,danke</string>
+    <string name="no_udate_button">Nein,danke</string>
     <string name="app_name">Spannungsteiler</string>
 
 </resources>

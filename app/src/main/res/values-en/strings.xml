@@ -25,4 +25,12 @@
     <string name="to_clipboard">Copied to clipboard</string>
     <string name="version_info_update_available">New version available.</string>
     <string name="no_udate_button" translatable="false">No, thanks</string>
+    <string name="send">Share</string>
+
+    <!-- Info activity -->
+    <string name="dialog_new_version_available">
+     <![CDATA[
+        A more recent version of this App is available at the Google Play- Store. Voltage Divider:
+        ]]>
+    </string>
 </resources>

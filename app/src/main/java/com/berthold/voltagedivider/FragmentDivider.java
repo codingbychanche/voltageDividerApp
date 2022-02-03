@@ -1,6 +1,7 @@
 package com.berthold.voltagedivider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,18 +77,16 @@ public class FragmentDivider extends Fragment {
         solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String vIn = vInView.getText().toString();
-                String vOut = vOutView.getText().toString();
 
-                // Store input fields
-                fragmentDividerModel.vIn = vIn;
-                fragmentDividerModel.vOut = vOut;
+                    // Store input fields
+                    fragmentDividerModel.vIn = vInView.getText().toString();
+                    fragmentDividerModel.vOut = vOutView.getText().toString();
 
-                // Find and display solution via the post methods
-                // invoke from inside the view model
-                isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocol view...
-                Long timestamp = System.currentTimeMillis();
-                fragmentDividerModel.solveDividerForR1AndR2(vIn, vOut, timestamp);
+                    // Find and display solution via the post methods
+                    // invoke from inside the view model
+                    isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocol view...
+                    Long timestamp = System.currentTimeMillis();
+                    fragmentDividerModel.solveDividerForR1AndR2(vInView.getText().toString(),vOutView.getText().toString(), timestamp);
             }
         });
 
