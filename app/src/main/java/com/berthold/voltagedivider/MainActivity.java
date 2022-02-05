@@ -303,8 +303,8 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
             if (buttonPressed.equals(FragmentYesNoDialog.BUTTON_OK_PRESSED)) {
 
                 // ToDo: Add url when available in play store........
-                //Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.convertjobscheduletocalendar&hl=de"));
-                //startActivity(openPlayStoreForUpdate);
+                Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.voltagedivider&hl=de"));
+                startActivity(openPlayStoreForUpdate);
             }
         }
     }

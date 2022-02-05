@@ -10,7 +10,7 @@ android {
         applicationId "com.berthold.voltagedivider"
         minSdkVersion 25
         targetSdkVersion 31
-        versionCode 1
+        versionCode 10
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
