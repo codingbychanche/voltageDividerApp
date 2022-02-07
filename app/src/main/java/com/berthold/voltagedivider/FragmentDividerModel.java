@@ -86,11 +86,9 @@ public class FragmentDividerModel extends ViewModel {
                     double vIn = Double.valueOf(vIn_V);
                     double vOut = Double.valueOf(vOut_V);
 
-
                     indexOfSolutionCurrentlyShown = 0;
+                    numberOfSolAndIndexOfCurrentlyShown.postValue(loc.getSearchingText());
 
-                    numberOfSolAndIndexOfCurrentlyShown
-                            .postValue(loc.getSearchingText());
                     result = Divider.findResistors(vIn, vOut);
 
                     // If a previous calc. is in progress, this prevents that the earliest result found
@@ -121,15 +119,17 @@ public class FragmentDividerModel extends ViewModel {
      * Shows the next available solution-
      */
     public void getAndShowNextSolution() {
-        if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() - 1 && result.getListOfResults().size() != 0)
-            indexOfSolutionCurrentlyShown++;
+        if (result!=null) {
+            if (indexOfSolutionCurrentlyShown < result.getListOfResults().size() - 1 && result.getListOfResults().size() != 0)
+                indexOfSolutionCurrentlyShown++;
 
-        DividerResult r = null;
-        if (result != null) {
-            r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
-            String nextSolution = buildSolutiontext(r);
-            currentSolutionShown.postValue(nextSolution);
-            numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+            DividerResult r = null;
+            //if (result != null) {
+                r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
+                String nextSolution = buildSolutiontext(r);
+                currentSolutionShown.postValue(nextSolution);
+                numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+            //}
         }
     }
 
@@ -137,15 +137,17 @@ public class FragmentDividerModel extends ViewModel {
      * Shows the previous available solution.
      */
     public void getPreviousSolution() {
-        if (indexOfSolutionCurrentlyShown > 0)
-            indexOfSolutionCurrentlyShown--;
+        if (result!=null){
+            if (indexOfSolutionCurrentlyShown > 0)
+                indexOfSolutionCurrentlyShown--;
 
-        DividerResult r = null;
-        if (result != null) {
-            r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
-            String nextSolution = buildSolutiontext(r);
-            currentSolutionShown.postValue(nextSolution);
-            numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+            DividerResult r = null;
+            //if (result != null) {
+                r = result.getListOfResults().get(indexOfSolutionCurrentlyShown);
+                String nextSolution = buildSolutiontext(r);
+                currentSolutionShown.postValue(nextSolution);
+                numberOfSolAndIndexOfCurrentlyShown.postValue(buildNumberOfSolFoundAndIndexOfCurrent(result));
+            //}
         }
     }
 
