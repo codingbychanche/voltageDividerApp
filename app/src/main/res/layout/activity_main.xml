@@ -10,7 +10,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
 
-    tools:context=".MainActivity">
+    tools:context=".Main.MainActivity">
 
     <ImageView
         android:id="@+id/info_fragment_show_info"

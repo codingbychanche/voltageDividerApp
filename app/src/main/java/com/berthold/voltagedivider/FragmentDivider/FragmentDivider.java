@@ -1,7 +1,6 @@
-package com.berthold.voltagedivider;
+package com.berthold.voltagedivider.FragmentDivider;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,11 @@ import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.berthold.voltagedivider.HTMLTools;
+import com.berthold.voltagedivider.Locale;
+import com.berthold.voltagedivider.Main.MainViewModel;
+import com.berthold.voltagedivider.R;
 
 public class FragmentDivider extends Fragment {
 

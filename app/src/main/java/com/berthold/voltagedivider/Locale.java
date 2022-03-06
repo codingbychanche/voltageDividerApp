@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class Locale {
 
-    String protocolStartText,noSolutionFoundText,searchingText,showingText;
+    public String protocolStartText,noSolutionFoundText,searchingText,showingText;
 
     public void setNoSolutionFoundText(String noSolutionFoundText){
         this.noSolutionFoundText=noSolutionFoundText;

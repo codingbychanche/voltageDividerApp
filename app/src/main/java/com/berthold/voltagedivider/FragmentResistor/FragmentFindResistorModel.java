@@ -1,7 +1,9 @@
-package com.berthold.voltagedivider;
+package com.berthold.voltagedivider.FragmentResistor;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.berthold.voltagedivider.Locale;
 
 import VoltageDiv.GetResistors;
 import VoltageDiv.ResistorResult;
@@ -11,7 +13,7 @@ public class FragmentFindResistorModel extends ViewModel {
     //
     // Locale
     //
-    Locale loc;
+    public Locale loc;
 
     //
     // The input
@@ -34,7 +36,7 @@ public class FragmentFindResistorModel extends ViewModel {
      * @param resistorValue_Ohm
      * @param tolerableErrorIn_P
      */
-    public void findRsistor(String resistorValue_Ohm,String tolerableErrorIn_P){
+    public void findResistor(String resistorValue_Ohm, String tolerableErrorIn_P){
         try{
             double r=Double.valueOf(resistorValue_Ohm);
             double e=Double.valueOf(tolerableErrorIn_P);

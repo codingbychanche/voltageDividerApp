@@ -1,4 +1,4 @@
-package com.berthold.voltagedivider;
+package com.berthold.voltagedivider.Main;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,6 +6,10 @@ import android.content.res.Resources;
 import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.berthold.voltagedivider.HTMLTools;
+import com.berthold.voltagedivider.Locale;
+import com.berthold.voltagedivider.VersionChecker;
 
 public class MainViewModel extends ViewModel {
 

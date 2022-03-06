@@ -1,4 +1,4 @@
-package com.berthold.voltagedivider;
+package com.berthold.voltagedivider.Main;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -8,26 +8,24 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.berthold.voltagedivider.FragmentDivider.FragmentDivider;
+import com.berthold.voltagedivider.FragmentInfo;
+import com.berthold.voltagedivider.FragmentResistor.FragmentFindResistor;
+import com.berthold.voltagedivider.FragmentYesNoDialog;
+import com.berthold.voltagedivider.GetThisAppsVersion;
+import com.berthold.voltagedivider.Locale;
+import com.berthold.voltagedivider.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ShareCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.provider.Settings;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -71,35 +69,38 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         //
         // Locale for use in view models
         //
-        Locale loc=new Locale();
+        Locale loc = new Locale();
         loc.setProtocolStartText(getApplicationContext().getResources().getString(R.string.protocol_start_text));
-        mainViewModel.loc=loc;
+        mainViewModel.loc = loc;
 
         //
         // Check if there is a newer version of this app available at the play store.
         //
-        if (showUpdateInfo()) {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(10000);
-                    } catch (Exception e) {
-                    }
+        if (CheckForNetwork.isNetworkAvailable(getApplicationContext())) {
+            if (showUpdateInfo()) {
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(10000);
+                        } catch (Exception e) {
+                        }
 
-                    String currentVersion = GetThisAppsVersion.thisVersion(getApplicationContext());
-                    String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay(getApplicationContext());
+                        String currentVersion = GetThisAppsVersion.thisVersion(getApplicationContext());
+                        String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay(getApplicationContext());
 
-                    if (!latestVersionInGooglePlay.equals(currentVersion)) {
-                        saveTimeUpdateInfoLastOpened();
-                        String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
-                        String ok = getResources().getString(R.string.do_update_confirm_button);
-                        String cancel = getResources().getString(R.string.no_udate_button);
-                        showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
+                        if (!latestVersionInGooglePlay.equals(currentVersion)) {
+                            saveTimeUpdateInfoLastOpened();
+                            String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
+                            String ok = getResources().getString(R.string.do_update_confirm_button);
+                            String cancel = getResources().getString(R.string.no_udate_button);
+                            showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
+                        }
                     }
-                }
-            });
-            t.start();
+                });
+                t.start();
+            } else
+                Log.v("NETWORKNETWORK_", "No Network");
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
             @Override
             public void onChanged(String s) {
                 protocolView.append(HtmlCompat.fromHtml(s, 0));
-                Log.v("CONTEXT_",s+"=");
+                Log.v("CONTEXT_", s + "=");
             }
         });
     }

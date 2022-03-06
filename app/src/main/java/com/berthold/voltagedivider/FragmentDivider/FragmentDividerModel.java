@@ -1,9 +1,11 @@
-package com.berthold.voltagedivider;
+package com.berthold.voltagedivider.FragmentDivider;
 
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.berthold.voltagedivider.Locale;
 
 import VoltageDiv.Divider;
 import VoltageDiv.DividerResult;
@@ -16,7 +18,7 @@ import VoltageDiv.DividerResults;
 public class FragmentDividerModel extends ViewModel {
 
     // Locale
-    Locale loc;
+    public Locale loc;
 
     //
     // Index of the solution currently shown
