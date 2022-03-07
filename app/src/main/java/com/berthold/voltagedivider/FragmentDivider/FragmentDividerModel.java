@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.berthold.voltagedivider.Locale;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import VoltageDiv.Divider;
 import VoltageDiv.DividerResult;
 import VoltageDiv.DividerResults;
@@ -39,7 +42,6 @@ public class FragmentDividerModel extends ViewModel {
     // The found solution.
     //
     public MutableLiveData<String> currentSolutionShown;
-
     public MutableLiveData<String> getCurrentSolutionShown() {
         if (currentSolutionShown == null)
             currentSolutionShown = new MutableLiveData<String>();
@@ -50,7 +52,6 @@ public class FragmentDividerModel extends ViewModel {
     // Number of solutions found and index of the solution currently displayed...
     //
     public MutableLiveData<String> numberOfSolAndIndexOfCurrentlyShown;
-
     public MutableLiveData<String> getNumberOfSolAndIndexOfCurrentlyShown() {
         if (numberOfSolAndIndexOfCurrentlyShown == null) {
             numberOfSolAndIndexOfCurrentlyShown = new MutableLiveData<String>();
@@ -59,6 +60,59 @@ public class FragmentDividerModel extends ViewModel {
         }
         return numberOfSolAndIndexOfCurrentlyShown;
     }
+
+    //
+    // Values for checkboxes showing whether an E-series should be excluded or not
+    //
+    public MutableLiveData<Boolean> exE3;
+    public MutableLiveData<Boolean> doExcludeE3(){
+        if (exE3==null) {
+            exE3 = new MutableLiveData<>();
+            exE3.setValue(false);
+        }
+        return exE3;
+    }
+    public MutableLiveData<Boolean> exE6;
+    public MutableLiveData<Boolean> doExcludeE6(){
+        if (exE6==null) {
+            exE6 = new MutableLiveData<>();
+            exE6.setValue(false);
+        }
+        return exE6;
+    }
+    public MutableLiveData<Boolean> exE12;
+    public MutableLiveData<Boolean> doExcludeE12(){
+        if (exE12==null) {
+            exE12 = new MutableLiveData<>();
+            exE12.setValue(false);
+        }
+        return exE12;
+    }
+    public MutableLiveData<Boolean> exE24;
+    public MutableLiveData<Boolean> doExcludeE24(){
+        if (exE24==null) {
+            exE24= new MutableLiveData<>();
+            exE24.setValue(false);
+        }
+        return exE24;
+    }
+    public MutableLiveData<Boolean> exE48;
+    public MutableLiveData<Boolean> doExcludeE48(){
+        if (exE48==null) {
+            exE48 = new MutableLiveData<>();
+            exE48.setValue(false);
+        }
+        return exE48;
+    }
+    public MutableLiveData<Boolean> exE96;
+    public MutableLiveData<Boolean> doExcludeE96(){
+        if (exE96==null) {
+            exE96= new MutableLiveData<>();
+            exE96.setValue(false);
+        }
+        return exE96;
+    }
+
 
     // The UI
     //
@@ -91,7 +145,36 @@ public class FragmentDividerModel extends ViewModel {
                     indexOfSolutionCurrentlyShown = 0;
                     numberOfSolAndIndexOfCurrentlyShown.postValue(loc.getSearchingText());
 
-                    result = Divider.findResistors(vIn, vOut);
+                    List<Integer> exclude=new ArrayList<>();
+
+                    int e3=0;
+                    int e6=0;
+                    int e12=0;
+                    int e24=0;
+                    int e48=0;
+                    int e96=0;
+
+                    if (exE3.getValue())
+                        e3=3;
+                    if (exE6.getValue())
+                        e6=6;
+                    if(exE12.getValue())
+                        e12=12;
+                    if(exE24.getValue())
+                        e24=24;
+                    if (exE48.getValue())
+                        e48=48;
+                    if (exE96.getValue())
+                        e96=96;
+
+                    exclude.add(e3);
+                    exclude.add(e6);
+                    exclude.add(e12);
+                    exclude.add(e24);
+                    exclude.add(e48);
+                    exclude.add(e96);
+
+                    result = Divider.findResistors(vIn, vOut,exclude);
 
                     // If a previous calc. is in progress, this prevents that the earliest result found
                     // is overwritten.

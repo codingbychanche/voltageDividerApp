@@ -26,7 +26,7 @@
     <string name="version_info_update_available">New version available.</string>
     <string name="no_udate_button" translatable="false">No, thanks</string>
     <string name="send">Share</string>
-
+    <string name="exclude_info_text">Exclude:</string>
     <!-- Info activity -->
     <string name="dialog_new_version_available">
      <![CDATA[

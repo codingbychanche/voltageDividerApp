@@ -94,29 +94,32 @@ public class FragmentInfo extends Fragment {
             @Override
             public void run() {
 
-
                 //
-                // Active network available? If so, check if this app is older than the veriosn
+                // Active network available? If so, check if this app is older than the version
                 // published on Google Play....
                 //
                 if (CheckForNetwork.isNetworkAvailable(requireActivity().getApplicationContext())) {
                     final String latestVersionInGooglePlay = getAppVersionfromGooglePlay(requireActivity().getApplicationContext());
 
-                    if (latestVersionInGooglePlay.equals(currentVersion)) {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //updateInfoView.setText(getResources().getText(R.string.version_info_is_latest_version));
-                                updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_ok) + "", 0));
-                            }
-                        });
-                    } else {
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available) + latestVersionInGooglePlay, 0));
-                            }
-                        });
+                    if (mainViewModel.currentGFragmentShown.getValue().equals("Info")) { // Only if this fragment is visible to the user!
+                        if (latestVersionInGooglePlay.equals(currentVersion)) {
+
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //updateInfoView.setText(getResources().getText(R.string.version_info_is_latest_version));
+                                    updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_ok) + "", 0));
+                                }
+                            });
+                        } else {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available) + latestVersionInGooglePlay, 0));
+                                }
+                            });
+                        }
                     }
                 } else
                     Log.v("NETWORKNETWORK_", "NO Net");
@@ -130,36 +133,39 @@ public class FragmentInfo extends Fragment {
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    htmlSite = new StringBuilder();
+                if (mainViewModel.currentGFragmentShown.getValue().equals("Info")) { // Only if this fragment is visible to the user!
+                    try {
+                        htmlSite = new StringBuilder();
 
-                    // @rem:Shows how to load data from androids 'assests'- folder@@
-                    if (current.equals("de") || current.equals("en")) {
-                        if (current.equals("de"))
-                            bufferedReader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("InfoPage-de.html")));
-                        if (current.equals("en"))
+                        // @rem:Shows how to load data from androids 'assests'- folder@@
+                        if (current.equals("de") || current.equals("en")) {
+                            if (current.equals("de"))
+                                bufferedReader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("InfoPage-de.html")));
+                            if (current.equals("en"))
+                                bufferedReader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("InfoPage-en.html")));
+                        } else
                             bufferedReader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("InfoPage-en.html")));
-                    } else
-                        bufferedReader = new BufferedReader(new InputStreamReader(getActivity().getAssets().open("InfoPage-en.html")));
 
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null)
-                        htmlSite.append(line);
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null)
+                            htmlSite.append(line);
 
-                } catch (IOException io) {
-                    Log.v("Info", io.toString());
-                }
-
-                //
-                // Show info text.
-                //
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        webView.loadData(htmlSite.toString(), "text/html", null);
-                        progress.setVisibility(View.GONE);
+                    } catch (IOException io) {
+                        Log.v("Info", io.toString());
                     }
-                });
+
+
+                    //
+                    // Show info text.
+                    //
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            webView.loadData(htmlSite.toString(), "text/html", null);
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+                }
             }
         });
         t2.start();

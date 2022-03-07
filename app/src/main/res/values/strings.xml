@@ -33,6 +33,7 @@
     <string name="show_next_sol" translatable="false">+</string>
     <string name="show_last_sol" translatable="false">-</string>
     <string name="solution_hint">Lösung......</string>
+    <string name="exclude_info_text">Ohne:</string>
 
     <!-- Fragment Protocol -->
     <string name="clear_protol">Löschen</string>

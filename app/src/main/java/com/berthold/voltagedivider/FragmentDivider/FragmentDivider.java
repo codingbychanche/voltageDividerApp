@@ -1,10 +1,13 @@
 package com.berthold.voltagedivider.FragmentDivider;
 
+import android.content.ContentProviderClient;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,6 +69,7 @@ public class FragmentDivider extends Fragment {
         ProgressBar searchSolProgressView = view.findViewById(R.id.progress_searching_divider);
         TextView solutionCounterView = view.findViewById(R.id.solution_counter);
 
+
         //
         // restore input fields last values
         //
@@ -119,6 +123,75 @@ public class FragmentDivider extends Fragment {
             }
         });
 
+        //
+        // Marked checkboxes excluding certain E- series
+        //
+        CheckBox exE3View=view.findViewById(R.id.exclude_e3);
+        exE3View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE3View.isChecked())
+                    fragmentDividerModel.exE3.postValue(true);
+                else
+                    fragmentDividerModel.exE3.postValue(false);
+            }
+        });
+
+        CheckBox exE6View=view.findViewById(R.id.exclude_e6);
+        exE6View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE6View.isChecked())
+                    fragmentDividerModel.exE6.postValue(true);
+                else
+                    fragmentDividerModel.exE6.postValue(false);
+            }
+        });
+
+        CheckBox exE12View=view.findViewById(R.id.exclude_e12);
+        exE12View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE12View.isChecked())
+                    fragmentDividerModel.exE12.postValue(true);
+                else
+                    fragmentDividerModel.exE12.postValue(false);
+            }
+        });
+
+        CheckBox exE24View=view.findViewById(R.id.exclude_e24);
+        exE24View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE24View.isChecked())
+                    fragmentDividerModel.exE24.postValue(true);
+                else
+                    fragmentDividerModel.exE24.postValue(false);
+            }
+        });
+
+
+        CheckBox exE48View=view.findViewById(R.id.exclude_e48);
+        exE48View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE48View.isChecked())
+                    fragmentDividerModel.exE48.postValue(true);
+                else
+                    fragmentDividerModel.exE48.postValue(false);
+            }
+        });
+
+        CheckBox exE96View=view.findViewById(R.id.exclude_e96);
+        exE96View.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (exE96View.isChecked())
+                    fragmentDividerModel.exE96.postValue(true);
+                else
+                    fragmentDividerModel.exE96.postValue(false);
+            }
+        });
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // View Model Observers.
@@ -144,6 +217,69 @@ public class FragmentDivider extends Fragment {
             @Override
             public void onChanged(String s) {
                 solutionCounterView.setText(s);
+            }
+        });
+
+        //
+        // Checkboxes showing whether an E- series is to be excludes or not.
+        //
+        fragmentDividerModel.doExcludeE3().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+               if (s)
+                exE3View.setChecked(true);
+               else
+                   exE3View.setChecked(false);
+            }
+        });
+
+        fragmentDividerModel.doExcludeE6().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if (s)
+                    exE6View.setChecked(true);
+                else
+                    exE6View.setChecked(false);
+            }
+        });
+
+        fragmentDividerModel.doExcludeE12().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if (s)
+                    exE12View.setChecked(true);
+                else
+                    exE12View.setChecked(false);
+            }
+        });
+
+        fragmentDividerModel.doExcludeE24().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if (s)
+                    exE24View.setChecked(true);
+                else
+                    exE24View.setChecked(false);
+            }
+        });
+
+        fragmentDividerModel.doExcludeE48().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if (s)
+                    exE48View.setChecked(true);
+                else
+                    exE48View.setChecked(false);
+            }
+        });
+
+        fragmentDividerModel.doExcludeE96().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean s) {
+                if (s)
+                    exE96View.setChecked(true);
+                else
+                    exE96View.setChecked(false);
             }
         });
     }

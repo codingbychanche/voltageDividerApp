@@ -27,11 +27,70 @@
         android:scaleType="fitCenter"
 
 
+
         android:src="@drawable/divider_schematic"
         app:layout_constraintBottom_toBottomOf="@+id/vout_value_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/vin_value_layout"
         app:layout_constraintTop_toTopOf="@+id/vin_value_layout" />
+
+    <CheckBox
+        android:id="@+id/exclude_e3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E3"
+        app:layout_constraintStart_toStartOf="@+id/exclude_info_text"
+        app:layout_constraintTop_toTopOf="@+id/exclude_e6" />
+
+    <TextView
+        android:id="@+id/exclude_info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/exclude_info_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vout_value_layout"></TextView>
+
+    <CheckBox
+        android:id="@+id/exclude_e6"
+        android:text="E6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/exclude_e3"
+        app:layout_constraintTop_toTopOf="@+id/exclude_e12" />
+
+    <CheckBox
+        android:id="@+id/exclude_e12"
+        android:text="E12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/exclude_e6"
+        app:layout_constraintTop_toTopOf="@+id/exclude_e24" />
+
+    <CheckBox
+        android:id="@+id/exclude_e24"
+        android:text="E24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/exclude_e12"
+        app:layout_constraintTop_toTopOf="@+id/exclude_e48" />
+
+    <CheckBox
+        android:id="@+id/exclude_e48"
+        android:text="E48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/exclude_e24"
+        app:layout_constraintTop_toTopOf="@+id/exclude_e96" />
+
+    <CheckBox
+        android:id="@+id/exclude_e96"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E96"
+        app:layout_constraintStart_toEndOf="@+id/exclude_e48"
+        app:layout_constraintTop_toBottomOf="@+id/exclude_info_text" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vin_value_layout"
@@ -80,13 +139,12 @@
         android:layout_height="wrap_content"
         android:text="@string/solve"
         app:layout_constraintStart_toStartOf="@+id/vout_value_layout"
-        app:layout_constraintTop_toBottomOf="@+id/vout_value_layout"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/exclude_e96"></Button>
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:background="#DEE1E3"
         app:layout_constraintBottom_toTopOf="@id/next_sol"
         app:layout_constraintStart_toStartOf="parent"

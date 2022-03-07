@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.berthold.voltagedivider.Locale;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import VoltageDiv.GetResistors;
 import VoltageDiv.ResistorResult;
 
@@ -40,7 +43,24 @@ public class FragmentFindResistorModel extends ViewModel {
         try{
             double r=Double.valueOf(resistorValue_Ohm);
             double e=Double.valueOf(tolerableErrorIn_P);
-            ResistorResult rFound=GetResistors.getRValueClosestTo(r,e);
+
+
+            List<Integer> exclude=new ArrayList<>();
+
+            int e3=0;
+            int e6=0;
+            int e12=0;
+            int e24=0;
+            int e48=0;
+            int e96=0;
+
+            exclude.add(e3);
+            exclude.add(e6);
+            exclude.add(e12);
+            exclude.add(e24);
+            exclude.add(e48);
+            exclude.add(e96);
+            ResistorResult rFound=GetResistors.getRValueClosestTo(r,e,exclude);
 
             if (rFound.found()) {
                 String solution = rFound.getFoundResistorValue_Ohms() + " Ohm" + " E" + rFound.getBelongsToESeries() + "   " + rFound.getActualError_P() + "%";
