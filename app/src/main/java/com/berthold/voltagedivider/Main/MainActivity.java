@@ -89,13 +89,18 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                         String currentVersion = GetThisAppsVersion.thisVersion(getApplicationContext());
                         String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay(getApplicationContext());
 
-                        if (!latestVersionInGooglePlay.equals(currentVersion)) {
-                            saveTimeUpdateInfoLastOpened();
-                            String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
-                            String ok = getResources().getString(R.string.do_update_confirm_button);
-                            String cancel = getResources().getString(R.string.no_udate_button);
-                            showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
+                        // Only open when connection to Play Store was successful and
+                        // the latest version Info could be retrieved.....
+                        if (latestVersionInGooglePlay!="-") {
+                            if (!latestVersionInGooglePlay.equals(currentVersion)) {
+                                saveTimeUpdateInfoLastOpened();
+                                String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
+                                String ok = getResources().getString(R.string.do_update_confirm_button);
+                                String cancel = getResources().getString(R.string.no_udate_button);
+                                showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
+                            }
                         }
+
                     }
                 });
                 t.start();

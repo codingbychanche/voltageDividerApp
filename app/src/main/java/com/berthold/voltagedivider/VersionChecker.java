@@ -30,7 +30,7 @@ public class VersionChecker extends AsyncTask<String, String, String> {
                     .select("div.hAyfc:nth-child(4) > span:nth-child(2) > div:nth-child(1) > span:nth-child(1)")
                     .first()
                     .ownText();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (newVersion == null)

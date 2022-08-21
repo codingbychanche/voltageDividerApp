@@ -95,16 +95,16 @@ public class FragmentInfo extends Fragment {
             public void run() {
 
                 //
-                // Active network available? If so, check if this app is older than the version
-                // published on Google Play....
+                // Active network available?
                 //
+                //
+                // The following statement is true, when network is available, no ,matter if it is switched on or off!!!
+                // This statement is noo good if one wants to check if a network connection is possible....
                 if (CheckForNetwork.isNetworkAvailable(requireActivity().getApplicationContext())) {
                     final String latestVersionInGooglePlay = getAppVersionfromGooglePlay(requireActivity().getApplicationContext());
 
-                    if (mainViewModel.currentGFragmentShown.getValue().equals("Info")) { // Only if this fragment is visible to the user!
+                    if (latestVersionInGooglePlay != "-") {
                         if (latestVersionInGooglePlay.equals(currentVersion)) {
-
-
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -112,6 +112,8 @@ public class FragmentInfo extends Fragment {
                                     updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_ok) + "", 0));
                                 }
                             });
+
+                            // OK, could connect to network, could connect to google plays store listing of the app, get version.
                         } else {
                             handler.post(new Runnable() {
                                 @Override
@@ -120,9 +122,23 @@ public class FragmentInfo extends Fragment {
                                 }
                             });
                         }
-                    }
+
+                    } else
+                        // Network was available but, could not retrieve version info from google plays store listing of this app.
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.no_version_info_available) + "", 0));
+                            }
+                        });
                 } else
-                    Log.v("NETWORKNETWORK_", "NO Net");
+                    // No network connection available or network disabled on device.
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.no_network) + "", 0));
+                        }
+                    });
             }
         });
         t.start();

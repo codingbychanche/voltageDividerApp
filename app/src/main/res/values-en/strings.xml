@@ -33,4 +33,16 @@
         A more recent version of this App is available at the Google Play- Store. Voltage Divider:
         ]]>
     </string>
+
+    <string name="no_network">
+     <![CDATA[
+        No network, could not check app- version.
+        ]]>
+    </string>
+
+    <string name="no_version_info_available">
+     <![CDATA[
+        Could not retrieve version info from Play Store.
+        ]]>
+    </string>
 </resources>
