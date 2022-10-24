@@ -110,7 +110,8 @@ public class FragmentFindResistor extends Fragment {
                             getResources().getString(R.string.allowed_deviation)+":"
                             + errorInPercentView.getText() + "%</b></u><br>";
 
-                    mainViewModel.protokollOutput.setValue(sol + "=" + s + "<p>");
+                    // todo: Change once protocol list works mainViewModel.protokollOutput.setValue(sol + "=" + s + "<p>");
+                    mainViewModel.getProtocol().setValue(sol + "=" + s + "<p>");
                     isNewSolution = false;
                 }
             }

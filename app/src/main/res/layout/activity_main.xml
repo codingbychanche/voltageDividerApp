@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient_blue"
-    app:layoutDescription="@xml/activity_main_scene"
+    android:id="@+id/mainLayout"
 
     android:focusable="true"
     android:focusableInTouchMode="true"
 
+    app:layoutDescription="@xml/activity_main_scene2"
     tools:context=".Main.MainActivity">
 
     <ImageView
@@ -39,32 +40,18 @@
         app:layout_constraintStart_toEndOf="@+id/findResistor"
         app:layout_constraintTop_toTopOf="@+id/findResistor"></Button>
 
-    <ScrollView
-        android:id="@+id/scroll_protocoll"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/protocolListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/background_corner_rounded"
-        app:layout_constraintBottom_toBottomOf="@+id/protocol_to_clipboard"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"
-        tools:layout_editor_absoluteX="5dp">
-
-        <TextView
-            android:id="@+id/protocol_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@id/protocol_to_clipboard"
-            app:layout_constraintEnd_toEndOf="parent"></TextView>
-    </ScrollView>
-
-    <Button
-        android:id="@+id/clear_protocol"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/clear_protol"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/protocol_to_clipboard"></Button>
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current" />
+
+
     <!--
         <Button
             android:id="@+id/share_protocol"
@@ -82,15 +69,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_share"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"></ImageButton>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"></ImageButton>
 
     <FrameLayout
         android:id="@+id/fragment_container_for_current"
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:background="@drawable/background_corner_rounded"
-        app:layout_constraintTop_toBottomOf="@+id/findResistor"
-        tools:layout_editor_absoluteX="5dp"></FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"></FrameLayout>
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

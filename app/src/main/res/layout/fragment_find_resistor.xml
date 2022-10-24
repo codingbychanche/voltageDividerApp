@@ -84,6 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="#DEE1E3"
         android:hint="@string/output_standard_res_value_and_series"
         app:layout_constraintBottom_toBottomOf="parent"

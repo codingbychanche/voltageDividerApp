@@ -204,7 +204,8 @@ public class FragmentDivider extends Fragment {
                 dividerResultView.setText(HtmlCompat.fromHtml(s, 0));
 
                 if (isNewSolution) {
-                    mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
+                    //todo Change, once protocol list works...   mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
+                    mainViewModel.getProtocol().setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
                     isNewSolution=false;
                 }
             }

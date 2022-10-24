@@ -18,10 +18,14 @@ import com.berthold.voltagedivider.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -29,8 +33,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FragmentYesNoDialog.getDataFromFragment {
 
@@ -138,22 +143,27 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
             }
         });
 
-        TextView protocolView = findViewById(R.id.protocol_view);
         //
-        // clear the protocol view....
+        // Prepare list, containing the protocol for all calculations one
         //
-        Button clearProtocol = findViewById(R.id.clear_protocol);
-        clearProtocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                protocolView.setText("");
-            }
-        });
+        ArrayList<String> protocolData=new ArrayList<>();
+        RecyclerView protocolListView = findViewById(R.id.protocolListView);
+
+        protocolListView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
+
+        LinearLayoutManager manager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true);
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(protocolListView.getContext(),
+               manager.getOrientation());
+        protocolListView.addItemDecoration(mDividerItemDecoration);
+
+        ProtocolListAdapter protocolListAdapter = new ProtocolListAdapter(protocolData);
+        protocolListView.setAdapter(protocolListAdapter);
+
 
         /*
         //
         // Share the protocol...
-        //
+        // todo: Remove, once list view version of protocol works....
         Button shareProtocol=findViewById(R.id.share_protocol);
         shareProtocol.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,9 +177,10 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         });
         */
 
+        /*
         //
         // Put protocol to clipboard
-        //
+        // todo: Remove, once list view version of protocol works....
         ImageButton toClipBoard = findViewById(R.id.protocol_to_clipboard);
         toClipBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.to_clipboard), Toast.LENGTH_LONG).show();
             }
         });
+        */
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Observers
@@ -216,16 +228,20 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         };
         mainViewModel.getCurrentGFragmentShown().observe(this, fragmentCurtlyShownObserver);
 
+
         //
         //  Updates the protocol view
-        //
-        mainViewModel.getProtokollOutput().observe(this, new Observer<String>() {
+        //  todo: Remove, once list view version of protocol works....
+        mainViewModel.getProtocol().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                protocolView.append(HtmlCompat.fromHtml(s, 0));
+                //mainViewModel.getProtocol().setValue(s);
                 Log.v("CONTEXT_", s + "=");
+                protocolData.add(s);
+                protocolListAdapter.notifyDataSetChanged();
             }
         });
+
     }
 
     /**

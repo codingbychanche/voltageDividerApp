@@ -3,47 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
-    <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="2500"
-        motion:motionInterpolator="linear">
-        <OnSwipe motion:dragDirection="dragUp"
-            motion:touchAnchorSide="top"/>
-    </Transition>
+
 
     <ConstraintSet android:id="@+id/start">
-        <Constraint
-            android:layout_height="10dp"
-            motion:layout_editor_absoluteX="25dp"
-            motion:layout_constraintBottom_toTopOf="@+id/scroll_protocoll"
-            android:layout_width="match_parent"
-            android:id="@+id/swipe_bar"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current" />
+
     </ConstraintSet>
 
 
     <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:layout_height="0dp"
-            motion:layout_editor_absoluteX="5dp"
-            android:layout_width="match_parent"
-            android:id="@+id/scroll_protocoll"
-            motion:layout_constraintTop_toBottomOf="@+id/fragment_container_for_current"
-            motion:layout_constraintBottom_toBottomOf="@+id/protocol_to_clipboard" />
-        <Constraint
-            android:layout_height="0dp"
-            motion:layout_editor_absoluteX="5dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/divider"
-            android:layout_width="match_parent"
-            motion:layout_constraintTop_toBottomOf="@+id/findResistor"
-            android:id="@+id/fragment_container_for_current" />
-        <Constraint
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            motion:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/protocol_to_clipboard"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_editor_absoluteY="702dp" />
+
+
     </ConstraintSet>
 </MotionScene>
