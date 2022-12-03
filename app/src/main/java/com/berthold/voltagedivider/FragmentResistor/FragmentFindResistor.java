@@ -64,7 +64,7 @@ public class FragmentFindResistor extends Fragment {
         //
         EditText resitorValueInputView = view.findViewById(R.id.resistor_value);
         EditText errorInPercentView = view.findViewById(R.id.tolerable_error_in_p);
-        TextView standardValueAndSeriesView = view.findViewById(R.id.standard_value_and_series);
+        //TextView standardValueAndSeriesView = view.findViewById(R.id.standard_value_and_series);
 
         //
         // Restore the last input value in any of the edit text fields....
@@ -101,16 +101,17 @@ public class FragmentFindResistor extends Fragment {
             @Override
             public void onChanged(String s) {
 
-                standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s, 0));
+                //standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s, 0));
 
                 // Protocol output
-                if (isNewSolution) {
-                    String sol = "<b><u>" + getResources().getString(R.string.searched_was_text)+" "
-                            + resitorValueInputView.getText().toString() + " Ohm. " +
-                            getResources().getString(R.string.allowed_deviation)+":"
-                            + errorInPercentView.getText() + "%</b></u><br>";
 
-                    // todo: Change once protocol list works mainViewModel.protokollOutput.setValue(sol + "=" + s + "<p>");
+                if (isNewSolution) {
+                    String sol = "<b>" + getResources().getString(R.string.searched_was_text)+" "
+                            + resitorValueInputView.getText().toString() + "&Omega; " +
+                            getResources().getString(R.string.allowed_deviation)+":"
+                            + errorInPercentView.getText() + "%</b><br>";
+
+
                     mainViewModel.getProtocol().setValue(sol + "=" + s + "<p>");
                     isNewSolution = false;
                 }

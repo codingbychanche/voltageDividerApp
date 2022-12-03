@@ -63,7 +63,7 @@ public class FragmentFindResistorModel extends ViewModel {
             ResistorResult rFound=GetResistors.getRValueClosestTo(r,e,exclude);
 
             if (rFound.found()) {
-                String solution = rFound.getFoundResistorValue_Ohms() + " Ohm" + " E" + rFound.getBelongsToESeries() + "   " + rFound.getActualError_P() + "%";
+                String solution = rFound.getFoundResistorValue_Ohms() + "&Omega;" + " E" + rFound.getESeries() + "   " + rFound.getActualError_P() + "%";
                 resistorValuefoundInAnyOfTheESeries_Ohm.setValue(solution);
             } else
                 resistorValuefoundInAnyOfTheESeries_Ohm.setValue(loc.getNoSolutionFound());

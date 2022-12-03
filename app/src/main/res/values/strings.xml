@@ -26,6 +26,7 @@
 
     <!-- Fragment Divider -->
     <string name="titel_divider">Spannungsteiler</string>
+    <string name="divider_sub_title">Beste Lösung finden"</string>
     <string name="vin_hint" translatable="false">Vin [Volt]</string>
     <string name="vout_hint" translatable="false">Vout [Volt]</string>
     <string name="error_r2_hint">R2 [Ohm], zulässige abw. %</string>
@@ -34,6 +35,9 @@
     <string name="show_last_sol" translatable="false">-</string>
     <string name="solution_hint">Lösung......</string>
     <string name="exclude_info_text">Ohne:</string>
+    <string name="show_all_solutions_for_divider">Tabelle</string>
+    <string name="show_all_subtitle">Alle Lösungen</string>
+
 
     <!-- Fragment Protocol -->
     <string name="clear_protol">Löschen</string>

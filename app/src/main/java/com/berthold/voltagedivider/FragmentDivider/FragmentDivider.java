@@ -1,8 +1,6 @@
 package com.berthold.voltagedivider.FragmentDivider;
 
-import android.content.ContentProviderClient;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -54,18 +51,17 @@ public class FragmentDivider extends Fragment {
         FragmentDividerModel fragmentDividerModel = ViewModelProviders.of(requireActivity()).get(FragmentDividerModel.class);
 
         // Locale
-        Locale loc=new Locale();
+        Locale loc = new Locale();
         loc.setSearchingText(requireActivity().getResources().getString(R.string.searching));
         loc.setShowingText(requireActivity().getResources().getString(R.string.showing));
         loc.setNoSolutionFoundText(requireActivity().getResources().getString(R.string.no_solution));
-        fragmentDividerModel.loc=loc;
+        fragmentDividerModel.loc = loc;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
         //
         EditText vInView = view.findViewById(R.id.v_in);
         EditText vOutView = view.findViewById(R.id.v_out);
-        TextView dividerResultView = view.findViewById(R.id.divider_result);
         ProgressBar searchSolProgressView = view.findViewById(R.id.progress_searching_divider);
         TextView solutionCounterView = view.findViewById(R.id.solution_counter);
 
@@ -79,54 +75,43 @@ public class FragmentDivider extends Fragment {
             vOutView.setText(fragmentDividerModel.vOut);
 
         //
-        // Solve the divider....
+        // Solve the divider and show best solution found.
         //
         Button solve = view.findViewById(R.id.find_solution_for_divider);
         solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    // Store input fields
-                    fragmentDividerModel.vIn = vInView.getText().toString();
-                    fragmentDividerModel.vOut = vOutView.getText().toString();
+                // Store input fields
+                fragmentDividerModel.vIn = vInView.getText().toString();
+                fragmentDividerModel.vOut = vOutView.getText().toString();
 
-                    // Find and display solution via the post methods
-                    // invoke from inside the view model
-                    isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocol view...
-                    Long timestamp = System.currentTimeMillis();
-                    fragmentDividerModel.solveDividerForR1AndR2(vInView.getText().toString(),vOutView.getText().toString(), timestamp);
+                // Find and display solution via the post methods
+                // invoke from inside the view model
+                isNewSolution = true; // Notifes the observe, that a new solution was calculated and thus, display the result also inside protocol view...
+                Long timestamp = System.currentTimeMillis();
+                fragmentDividerModel.solveDividerForR1AndR2(vInView.getText().toString(), vOutView.getText().toString(), timestamp);
             }
         });
 
         //
-        // Show next solution available
+        // Show all solutions found.....
         //
-        Button nextSolView = view.findViewById(R.id.next_sol);
-        nextSolView.setOnClickListener(new View.OnClickListener() {
+        Button showAllSolutionsFound = view.findViewById(R.id.show_all_solutions_for_divider);
+        showAllSolutionsFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isNewSolution=true;
-                fragmentDividerModel.getAndShowNextSolution();
-            }
-        });
 
-        //
-        // Show previous solution available.
-        //
-        Button lastSolView = view.findViewById(R.id.last_sol);
-        lastSolView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                isNewSolution=true;
-                fragmentDividerModel.getPreviousSolution();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_for_current, FragmentDividerResultTable.newInstance())
+                        .commitNow();
             }
         });
 
         //
         // Marked checkboxes excluding certain E- series
         //
-        CheckBox exE3View=view.findViewById(R.id.exclude_e3);
+        CheckBox exE3View = view.findViewById(R.id.exclude_e3);
         exE3View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,7 +122,7 @@ public class FragmentDivider extends Fragment {
             }
         });
 
-        CheckBox exE6View=view.findViewById(R.id.exclude_e6);
+        CheckBox exE6View = view.findViewById(R.id.exclude_e6);
         exE6View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +133,7 @@ public class FragmentDivider extends Fragment {
             }
         });
 
-        CheckBox exE12View=view.findViewById(R.id.exclude_e12);
+        CheckBox exE12View = view.findViewById(R.id.exclude_e12);
         exE12View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +144,7 @@ public class FragmentDivider extends Fragment {
             }
         });
 
-        CheckBox exE24View=view.findViewById(R.id.exclude_e24);
+        CheckBox exE24View = view.findViewById(R.id.exclude_e24);
         exE24View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,7 +156,7 @@ public class FragmentDivider extends Fragment {
         });
 
 
-        CheckBox exE48View=view.findViewById(R.id.exclude_e48);
+        CheckBox exE48View = view.findViewById(R.id.exclude_e48);
         exE48View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,7 +167,7 @@ public class FragmentDivider extends Fragment {
             }
         });
 
-        CheckBox exE96View=view.findViewById(R.id.exclude_e96);
+        CheckBox exE96View = view.findViewById(R.id.exclude_e96);
         exE96View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,15 +183,15 @@ public class FragmentDivider extends Fragment {
         //
         // Displays the result.
         //
-        fragmentDividerModel.getCurrentSolutionShown().observe(getViewLifecycleOwner(), new Observer<String>() {
+        fragmentDividerModel.getBestSolutionFound().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                dividerResultView.setText(HtmlCompat.fromHtml(s, 0));
+                //dividerResultView.setText(HtmlCompat.fromHtml(s, 0));
 
                 if (isNewSolution) {
                     //todo Change, once protocol list works...   mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
                     mainViewModel.getProtocol().setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
-                    isNewSolution=false;
+                    isNewSolution = false;
                 }
             }
         });
@@ -227,10 +212,10 @@ public class FragmentDivider extends Fragment {
         fragmentDividerModel.doExcludeE3().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean s) {
-               if (s)
-                exE3View.setChecked(true);
-               else
-                   exE3View.setChecked(false);
+                if (s)
+                    exE3View.setChecked(true);
+                else
+                    exE3View.setChecked(false);
             }
         });
 

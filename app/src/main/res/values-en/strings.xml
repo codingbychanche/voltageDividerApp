@@ -27,6 +27,9 @@
     <string name="no_udate_button" translatable="false">No, thanks</string>
     <string name="send">Share</string>
     <string name="exclude_info_text">Exclude:</string>
+    <string name="show_all_solutions_for_divider">Table</string>
+    <string name="divider_sub_title">Find best solution"</string>
+    <string name="show_all_subtitle">All possible solutions</string>
     <!-- Info activity -->
     <string name="dialog_new_version_available">
      <![CDATA[

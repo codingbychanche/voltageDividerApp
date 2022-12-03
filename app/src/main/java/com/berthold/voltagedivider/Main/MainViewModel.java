@@ -34,22 +34,6 @@ public class MainViewModel extends ViewModel {
     }
 
     //
-    // This string holds a text which is meant to be displayed inside
-    // of the protocol fragment. E.g. the result of a calculation, an error....
-    //
-    /*
-    public MutableLiveData<String> protokollOutput;
-    public MutableLiveData<String> getProtokollOutput(){
-        if (protokollOutput==null) {
-            protokollOutput = new MutableLiveData<String>();
-            protokollOutput.setValue(HTMLTools.makeHeader(loc.getProtocolStartText()));
-
-        }
-        return protokollOutput;
-    }
-    */
-
-    //
     // This ist the list holding the protocol
     // entries.
     //

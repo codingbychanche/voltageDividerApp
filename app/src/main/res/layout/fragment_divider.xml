@@ -16,6 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
+    <TextView
+        android:id="@+id/sub"
+        style="@style/SubTitelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/divider_sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"></TextView>
+
     <ImageView
         android:id="@+id/div"
         android:layout_width="0dp"
@@ -100,7 +109,7 @@
         app:layout_constraintHorizontal_weight="6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/div"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/sub">
 
         <EditText
             android:id="@+id/v_in"
@@ -141,58 +150,34 @@
         app:layout_constraintStart_toStartOf="@+id/vout_value_layout"
         app:layout_constraintTop_toBottomOf="@+id/exclude_e96"></Button>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#DEE1E3"
-        app:layout_constraintBottom_toTopOf="@id/next_sol"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/find_solution_for_divider">
-
-        <TextView
-            android:id="@+id/divider_result"
-            style="@style/TextBody"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/solution_hint"></TextView>
-    </ScrollView>
 
     <Button
-        android:id="@+id/next_sol"
+        android:id="@+id/show_all_solutions_for_divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/show_next_sol"
-        app:layout_constraintStart_toEndOf="@+id/last_sol"
-        app:layout_constraintTop_toTopOf="@+id/last_sol"></Button>
-
-    <Button
-        android:id="@+id/last_sol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_last_sol"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        android:text="@string/show_all_solutions_for_divider"
+        app:layout_constraintBottom_toBottomOf="@+id/solution_counter"
+        app:layout_constraintStart_toEndOf="@+id/solution_counter"
+        app:layout_constraintTop_toTopOf="@+id/solution_counter"></Button>
 
     <TextView
         android:id="@+id/solution_counter"
         style="@style/TextBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:hint="@string/solution_count_hint"
-        app:layout_constraintBottom_toBottomOf="@+id/next_sol"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/next_sol"></TextView>
+        app:layout_constraintBottom_toBottomOf="@+id/find_solution_for_divider"
+        app:layout_constraintStart_toEndOf="@+id/find_solution_for_divider"
+        app:layout_constraintTop_toTopOf="@+id/find_solution_for_divider"></TextView>
 
     <ProgressBar
         android:id="@+id/progress_searching_divider"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2"></ProgressBar>
+        app:layout_constraintEnd_toEndOf="parent"></ProgressBar>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,8 @@ package com.berthold.voltagedivider.Main;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,13 +22,20 @@ public class ProtocolListAdapter extends RecyclerView.Adapter<ProtocolListAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView protcolEntry;
+        private WebView protcolEntry;
+
+
+
         RelativeLayout relativeLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             protcolEntry = itemView.findViewById(R.id.protocalEntryView);
+
+           protcolEntry.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+// remove a weird white line on the right size
+            protcolEntry.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         }
     }
 
@@ -42,7 +51,8 @@ public class ProtocolListAdapter extends RecyclerView.Adapter<ProtocolListAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.protcolEntry.setText(HtmlCompat.fromHtml(HTMLTools.makeSolutionBlockSolutionFound(protocolListData.get(position)), 0));
+        //holder.protcolEntry.setText(HtmlCompat.fromHtml(HTMLTools.makeSolutionBlockSolutionFound(protocolListData.get(position)), 0));
+        holder.protcolEntry.loadData(HTMLTools.makeSolutionBlockSolutionFound(protocolListData.get(position)),"text/html", "UTF-8");
 
     }
 
