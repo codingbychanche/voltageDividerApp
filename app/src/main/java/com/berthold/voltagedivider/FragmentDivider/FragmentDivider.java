@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -64,7 +66,6 @@ public class FragmentDivider extends Fragment {
         EditText vOutView = view.findViewById(R.id.v_out);
         ProgressBar searchSolProgressView = view.findViewById(R.id.progress_searching_divider);
         TextView solutionCounterView = view.findViewById(R.id.solution_counter);
-
 
         //
         // restore input fields last values
@@ -183,6 +184,21 @@ public class FragmentDivider extends Fragment {
         //
         // Displays the result.
         //
+        fragmentDividerModel.getAllSolutionsFound().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                //
+                // The reason why this is empty is:
+                // The view model fragmentDividerModel is shared by this class and the FragmentDividerResultTable- class
+                // If we would not implement this observer, the app would crash when posting  a value because 'getAllsolutionsFound'
+                // would be 'null'....
+                //
+            }
+        });
+
+
+
+
         fragmentDividerModel.getBestSolutionFound().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {

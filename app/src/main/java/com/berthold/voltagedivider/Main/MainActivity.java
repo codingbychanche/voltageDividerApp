@@ -177,22 +177,6 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         });
         */
 
-        /*
-        //
-        // Put protocol to clipboard
-        // todo: Remove, once list view version of protocol works....
-        ImageButton toClipBoard = findViewById(R.id.protocol_to_clipboard);
-        toClipBoard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("label", protocolView.getText());
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.to_clipboard), Toast.LENGTH_LONG).show();
-            }
-        });
-        */
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Observers
         //

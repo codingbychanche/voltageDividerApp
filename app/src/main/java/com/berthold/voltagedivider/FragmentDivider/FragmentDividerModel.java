@@ -1,5 +1,7 @@
 package com.berthold.voltagedivider.FragmentDivider;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -212,6 +214,8 @@ public class FragmentDividerModel extends ViewModel {
                             numberOfSolAndIndexOfCurrentlyShown.postValue(
                                     buildNumberOfSolFoundAndIndexOfCurrent(result));
 
+
+
                             allSolutionsFound.postValue(buildTextForAllResultsFound());
 
                         } else {
@@ -266,14 +270,38 @@ public class FragmentDividerModel extends ViewModel {
      */
     public String buildTextForAllResultsFound() {
 
-        List<DividerResult> listOfResults = new ArrayList<>();
+
 
         List<String> titleRow = new ArrayList();
 
+        //
+        // Build solution text
+        //
+        StringBuilder solution=new StringBuilder();
+
+        solution.append("Input Voltage V<sub>in</sub>="+result.getInputVoltage_V()+"V<br>");
+        solution.append("Anticipated output Voltage V<sub>out</sub>="+result.getOutputVoltage_V()+"V<br>");
+        solution.append("</p>");
+
+        List <Integer> excludedSeries=result.getListOfResults().get(0).getIncludedSeries();
+        if(excludedSeries!=null) {
+            if (excludedSeries.size() == 0)
+                solution.append("All standard series E3 - E96 are included in this solution</p>");
+            else {
+                solution.append("The following standard series are not included in this solution:<br>");
+                for (int e : excludedSeries)
+                    if (e!=0)
+                        solution.append("E" + e + " ");
+                solution.append("</p>");
+            }
+        }
+
+        //
+        // Produce a nice looking table in HTML....
+        //
         titleRow.add("<b>R1 found [&Omega;]</b>");
         titleRow.add("<b>R2 found [&Omega;]</b>");
 
-        titleRow.add("<b>Vout anticipated</b>");
         titleRow.add("<b>Vout nominal</b>");
 
         titleRow.add("<b>Vout max [V]</b>");
@@ -282,24 +310,24 @@ public class FragmentDividerModel extends ViewModel {
 
         Table t = new Table("Divider Results", titleRow);
 
-        //
-        // Produce a nice looking table in HTML....
-        //
-        for (DividerResult dr : result.getListOfResults()) {
-            List<String> oneResult = new ArrayList<>();
-            oneResult.add((String.valueOf(dr.getR1_V()) + " E" + dr.getR1FoundInSeries()));
-            oneResult.add((String.valueOf(dr.getR2_V()) + " E" + dr.getR2FoundInSeries()));
-            oneResult.add(String.valueOf(dr.getVOutDesiered()));
-            oneResult.add(String.valueOf(dr.getVoutNominal()));
-            oneResult.add((String.valueOf(dr.getvOutMax_V()) + "(" + dr.getDevFromMaxVoltage() + ")"));
-            oneResult.add((String.valueOf(dr.getErrorMargin())));
-            oneResult.add((String.valueOf(dr.getvOutMin_V()) + "(" + dr.getDevFromMinVoltage() + ")"));
-            t.addDataRow(oneResult);
+        if (result != null) {
+            for (DividerResult dr : result.getListOfResults()) {
+                List<String> oneResult = new ArrayList<>();
+                oneResult.add((String.valueOf(dr.getR1_V()) + " E" + dr.getR1FoundInSeries()));
+                oneResult.add((String.valueOf(dr.getR2_V()) + " E" + dr.getR2FoundInSeries()));
+
+                oneResult.add(String.valueOf(dr.getVoutNominal()));
+                oneResult.add((String.valueOf(dr.getvOutMax_V()) ));
+                oneResult.add((String.valueOf(dr.getErrorMargin())));
+                oneResult.add((String.valueOf(dr.getvOutMin_V())));
+                t.addDataRow(oneResult);
+            }
         }
 
-        String solution=t.createHtmlTable("-");
+        String solutionTable = t.createHtmlTable("-");
+        solution.append(solutionTable);
 
-        return solution;
+        return solution.toString();
     }
 
     /**
@@ -310,6 +338,6 @@ public class FragmentDividerModel extends ViewModel {
      * for the calculated divider and the index of the solution currently shown....
      */
     public String buildNumberOfSolFoundAndIndexOfCurrent(DividerResults r) {
-        return (loc.getShowingText() + " " + indexOfSolutionCurrentlyShown + "/" + (r.getListOfResults().size() - 1));
+        return (loc.getShowingText() + (r.getListOfResults().size() - 1));
     }
 }

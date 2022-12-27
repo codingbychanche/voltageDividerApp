@@ -1,5 +1,7 @@
 package com.berthold.voltagedivider.FragmentDivider;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,18 +20,19 @@ import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.Main.MainViewModel;
 import com.berthold.voltagedivider.R;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 public class FragmentDividerResultTable extends Fragment {
 
     // Debug
     private String tag;
 
-    // View model
-    private MainViewModel mainViewModel;
-    private FragmentDividerModel fragmentDividerModel;
-
+    // The fragment
     public static FragmentDividerResultTable newInstance() {
         return new FragmentDividerResultTable();
     }
+
+    public String allSolutions; // Solely to pass the result to the "Share method"...
 
     @Override
     public View onCreateView(
@@ -43,7 +47,6 @@ public class FragmentDividerResultTable extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // View Model
-        MainViewModel mainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
         FragmentDividerModel fragmentDividerModel = ViewModelProviders.of(requireActivity()).get(FragmentDividerModel.class);
 
         // Locale
@@ -53,27 +56,20 @@ public class FragmentDividerResultTable extends Fragment {
         loc.setNoSolutionFoundText(requireActivity().getResources().getString(R.string.no_solution));
         fragmentDividerModel.loc = loc;
 
-        //
-        // restore input fields last values
-        //
-        /*
-        if (fragmentDividerModel.vIn != null)
-            vInView.setText(fragmentDividerModel.vIn);
-        if (fragmentDividerModel.vOut != null)
-            vOutView.setText(fragmentDividerModel.vOut);
-        */
-
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // UI
         //
         // Share the result.....
         //
-
         ImageButton share = view.findViewById(R.id.share);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager)requireActivity().getSystemService(CLIPBOARD_SERVICE);
 
+                ClipData clip = ClipData.newPlainText("label", allSolutions);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(requireActivity().getApplicationContext(), getResources().getString(R.string.to_clipboard), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -99,6 +95,7 @@ public class FragmentDividerResultTable extends Fragment {
         fragmentDividerModel.getAllSolutionsFound().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                allSolutions=s;
                 WebView w=getActivity().findViewById(R.id.webview_table_of_all_solutions);
                 WebSettings webSettings=w.getSettings();
 
@@ -108,7 +105,7 @@ public class FragmentDividerResultTable extends Fragment {
                 //@rem:webView zoom Shows how to enable build in zoom feature@@
                 webSettings.setBuiltInZoomControls(true); // This enable the zoom controls
                 webSettings.setDisplayZoomControls(false); // This enables or disables overlaying the zoom controls....
-                
+
                 w.loadData(s,"text/html; charset=UTF-8", null);
             }
         });

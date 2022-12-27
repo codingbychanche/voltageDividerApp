@@ -4,7 +4,7 @@
     <string name="protocol_start_text">Protocol</string>
     <string name="no_solution">No solution found</string>
     <string name="searching">Searching....</string>
-    <string name="showing">Showing</string>
+    <string name="showing">Showing best solution of:</string>
     <string name="find_resistor">Resistor</string>
     <string name="divider">Voltage Divider</string>
     <string name="protocol_info">Protocol started</string>
@@ -27,7 +27,7 @@
     <string name="no_udate_button" translatable="false">No, thanks</string>
     <string name="send">Share</string>
     <string name="exclude_info_text">Exclude:</string>
-    <string name="show_all_solutions_for_divider">Table</string>
+    <string name="show_all_solutions_for_divider">Show all solutions</string>
     <string name="divider_sub_title">Find best solution"</string>
     <string name="show_all_subtitle">All possible solutions</string>
     <!-- Info activity -->

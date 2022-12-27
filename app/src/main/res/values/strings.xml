@@ -5,7 +5,7 @@
     <string name="protocol_start_text">Protokoll.......</string>
     <string name="no_solution">Keine Lösung gefunden....</string>
     <string name="searching">Suche.....</string>
-    <string name="showing">Zeige</string>
+    <string name="showing">Beste Lösung von insgesammt:</string>
 
     <!-- Main -->
     <!-- Strings used for fragments for navigation -->
@@ -35,7 +35,7 @@
     <string name="show_last_sol" translatable="false">-</string>
     <string name="solution_hint">Lösung......</string>
     <string name="exclude_info_text">Ohne:</string>
-    <string name="show_all_solutions_for_divider">Tabelle</string>
+    <string name="show_all_solutions_for_divider">Zeige alle Lösungen</string>
     <string name="show_all_subtitle">Alle Lösungen</string>
 
 
