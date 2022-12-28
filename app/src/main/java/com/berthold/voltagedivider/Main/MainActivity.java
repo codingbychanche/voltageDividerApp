@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,15 +16,19 @@ import com.berthold.voltagedivider.FragmentYesNoDialog;
 import com.berthold.voltagedivider.GetThisAppsVersion;
 import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.R;
+import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
     private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_PERMISSIONS = 1;
     private static final int CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE = 2;
 
+    // Protocoll list...
+    RecyclerView protocolListView;
+    ProtocolListAdapter protocolListAdapter;
+
     /**
      * Let there be light....
      *
@@ -71,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         //
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
+
         //
         // Locale for use in view models
         //
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
 
         //
         // Check if there is a newer version of this app available at the play store.
-        //
+        // todo: Not working anymore..... fix it!
         if (CheckForNetwork.isNetworkAvailable(getApplicationContext())) {
             if (showUpdateInfo()) {
                 Thread t = new Thread(new Runnable() {
@@ -147,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         // Prepare list, containing the protocol for all calculations one
         //
         ArrayList<String> protocolData=new ArrayList<>();
-        RecyclerView protocolListView = findViewById(R.id.protocolListView);
+         protocolListView = findViewById(R.id.protocolListView);
 
         protocolListView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
 
@@ -156,26 +166,13 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                manager.getOrientation());
         protocolListView.addItemDecoration(mDividerItemDecoration);
 
-        ProtocolListAdapter protocolListAdapter = new ProtocolListAdapter(protocolData);
+        protocolListAdapter = new ProtocolListAdapter(protocolData);
         protocolListView.setAdapter(protocolListAdapter);
 
 
-        /*
-        //
-        // Share the protocol...
-        // todo: Remove, once list view version of protocol works....
-        Button shareProtocol=findViewById(R.id.share_protocol);
-        shareProtocol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        enableSwipeToDeleteAndUndo();
 
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(Intent.EXTRA_TEXT,"<b>"+protocolView.getText().toString()+"\n");
-                startActivity(Intent.createChooser(sharingIntent, "Share using"));
-            }
-        });
-        */
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Observers
@@ -212,20 +209,53 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         };
         mainViewModel.getCurrentGFragmentShown().observe(this, fragmentCurtlyShownObserver);
 
-
         //
         //  Updates the protocol view
-        //  todo: Remove, once list view version of protocol works....
+        //
         mainViewModel.getProtocol().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                //mainViewModel.getProtocol().setValue(s);
-                Log.v("CONTEXT_", s + "=");
+
                 protocolData.add(s);
                 protocolListAdapter.notifyDataSetChanged();
             }
         });
 
+    }
+
+    private void enableSwipeToDeleteAndUndo() {
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+
+                final int position = viewHolder.getAdapterPosition();
+                final String item = protocolListAdapter.getProtocolListData().get(position);
+
+                protocolListAdapter.removeItem(position);
+
+                //@rem Shows how to create a snackbar with an action button@@
+                MotionLayout coordinatorLayout=findViewById(R.id.mainLayout);
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        protocolListAdapter.restoreItem(item, position);
+                        protocolListView.scrollToPosition(position);
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+                //@@
+
+            }
+        };
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchhelper.attachToRecyclerView(protocolListView);
     }
 
     /**
@@ -307,8 +337,6 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         //
         if (reqCode == CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE) {
             if (buttonPressed.equals(FragmentYesNoDialog.BUTTON_OK_PRESSED)) {
-
-                // ToDo: Add url when available in play store........
                 Intent openPlayStoreForUpdate = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.berthold.voltagedivider&hl=de"));
                 startActivity(openPlayStoreForUpdate);
             }
