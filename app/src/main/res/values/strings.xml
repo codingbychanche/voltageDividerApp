@@ -37,6 +37,8 @@
     <string name="exclude_info_text">Ohne:</string>
     <string name="show_all_solutions_for_divider">Zeige alle Lösungen</string>
     <string name="show_all_subtitle">Alle Lösungen</string>
+    <string name="share">Teilen</string>
+    <string name="back_to_find_new_div_res">Zurück, neue Lösung..</string>
 
 
     <!-- Fragment Protocol -->

@@ -144,31 +144,30 @@
 
     <Button
         android:id="@+id/find_solution_for_divider"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/solve"
         app:layout_constraintStart_toStartOf="@+id/vout_value_layout"
-        app:layout_constraintTop_toBottomOf="@+id/exclude_e96"></Button>
-
+        app:layout_constraintTop_toBottomOf="@+id/exclude_e3"></Button>
 
     <Button
         android:id="@+id/show_all_solutions_for_divider"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_all_solutions_for_divider"
-        app:layout_constraintStart_toStartOf="@+id/find_solution_for_divider"
-        app:layout_constraintTop_toBottomOf="@+id/find_solution_for_divider"></Button>
+        app:layout_constraintStart_toEndOf="@+id/find_solution_for_divider"
+        app:layout_constraintTop_toTopOf="@+id/find_solution_for_divider"></Button>
 
     <TextView
         android:id="@+id/solution_counter"
         style="@style/TextBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:hint="@string/solution_count_hint"
-        app:layout_constraintBottom_toBottomOf="@+id/find_solution_for_divider"
-        app:layout_constraintStart_toEndOf="@+id/find_solution_for_divider"
-        app:layout_constraintTop_toTopOf="@+id/find_solution_for_divider"></TextView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
 
     <ProgressBar
         android:id="@+id/progress_searching_divider"

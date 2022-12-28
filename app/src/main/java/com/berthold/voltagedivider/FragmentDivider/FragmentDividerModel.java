@@ -171,32 +171,18 @@ public class FragmentDividerModel extends ViewModel {
 
                     List<Integer> exclude = new ArrayList<>();
 
-                    int e3 = 0;
-                    int e6 = 0;
-                    int e12 = 0;
-                    int e24 = 0;
-                    int e48 = 0;
-                    int e96 = 0;
-
                     if (exE3.getValue())
-                        e3 = 3;
+                        exclude.add(3);
                     if (exE6.getValue())
-                        e6 = 6;
+                        exclude.add(6);
                     if (exE12.getValue())
-                        e12 = 12;
+                        exclude.add(12);
                     if (exE24.getValue())
-                        e24 = 24;
+                        exclude.add(24);
                     if (exE48.getValue())
-                        e48 = 48;
+                        exclude.add(48);
                     if (exE96.getValue())
-                        e96 = 96;
-
-                    exclude.add(e3);
-                    exclude.add(e6);
-                    exclude.add(e12);
-                    exclude.add(e24);
-                    exclude.add(e48);
-                    exclude.add(e96);
+                        exclude.add(96);
 
                     final int DECIMAL_PLACES = 3;
                     result = Divider.findResistors(vIn, vOut, DECIMAL_PLACES, exclude);
@@ -213,8 +199,6 @@ public class FragmentDividerModel extends ViewModel {
 
                             numberOfSolAndIndexOfCurrentlyShown.postValue(
                                     buildNumberOfSolFoundAndIndexOfCurrent(result));
-
-
 
                             allSolutionsFound.postValue(buildTextForAllResultsFound());
 
@@ -247,14 +231,13 @@ public class FragmentDividerModel extends ViewModel {
 
                 double durationOfCalcInSeconds = (timeStampSolAvailable - timestampOfLastCalc) / 1000;
 
-
                 solution.append(
                         "R<sub>1</sub>=" + r.getR1_V() + "&Omega; (E" + r.getR1FoundInSeries() + ")<br>" +
                                 "R<sub>2</sub>=" + r.getR2_V() + "&Omega; (E" + r.getR2FoundInSeries() + ")<br>" +
+                                "Nominal  V<sub>out</sub>="+r.getVoutNominal()+"V</p>"+
                                 "Max V<sub>out</sub>=" + r.getvOutMax_V() + "V &Delta;" + r.getDevFromMaxVoltage() + "V from anticipated<br>" +
                                 "Min V<sub>out</sub>=" + r.getvOutMin_V() + "V &Delta;" + r.getDevFromMinVoltage() + "V from anticipated<br>" + "Spread (max-min)=" + r.getErrorMargin() + "V");
                 solution.append("<p>");
-
 
             } else
                 solution.append(loc.getNoSolutionFound());
@@ -305,7 +288,7 @@ public class FragmentDividerModel extends ViewModel {
         titleRow.add("<b>Vout nominal</b>");
 
         titleRow.add("<b>Vout max [V]</b>");
-        titleRow.add("<b>Error margin [V]<br><sub>Max <--> Min</sub></b>");
+        titleRow.add("<b>Error margin [V]</b>");
         titleRow.add("<b>Vout min [V]</b>");
 
         Table t = new Table("Divider Results", titleRow);

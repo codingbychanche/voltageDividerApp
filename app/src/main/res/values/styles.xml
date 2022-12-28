@@ -1,6 +1,5 @@
 <resources>
 
-    <!-- Activity's -->
     <style name="TitelText" parent="TextAppearance.AppCompat">
         <item name="android:textSize">25dp</item>
         <item name="android:textStyle">bold</item>

@@ -30,6 +30,8 @@
     <string name="show_all_solutions_for_divider">Show all solutions</string>
     <string name="divider_sub_title">Find best solution"</string>
     <string name="show_all_subtitle">All possible solutions</string>
+    <string name="share">Share</string>
+    <string name="back_to_find_new_div_res">Back, find new solution..</string>
     <!-- Info activity -->
     <string name="dialog_new_version_available">
      <![CDATA[

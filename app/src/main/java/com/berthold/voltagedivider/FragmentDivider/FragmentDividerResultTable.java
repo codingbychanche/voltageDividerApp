@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -61,7 +62,7 @@ public class FragmentDividerResultTable extends Fragment {
         //
         // Share the result.....
         //
-        ImageButton share = view.findViewById(R.id.share);
+        Button share = view.findViewById(R.id.share);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +77,7 @@ public class FragmentDividerResultTable extends Fragment {
         //
         // Back to divider, find best solution...
         //
-        ImageButton closeTableView = view.findViewById(R.id.close_table_view);
+       Button closeTableView = view.findViewById(R.id.close_table_view);
         closeTableView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
