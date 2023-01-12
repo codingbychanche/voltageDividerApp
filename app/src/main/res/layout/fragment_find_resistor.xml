@@ -80,7 +80,8 @@
 
     <Button
         android:id="@+id/calc"
-        style="?android:attr/buttonBarButtonStyle"
+        style="@style/button"
+        app:icon="@android:drawable/ic_menu_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calc_button"

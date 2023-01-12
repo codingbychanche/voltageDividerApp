@@ -13,9 +13,10 @@ import com.berthold.voltagedivider.FragmentDivider.FragmentDivider;
 import com.berthold.voltagedivider.FragmentInfo;
 import com.berthold.voltagedivider.FragmentResistor.FragmentFindResistor;
 import com.berthold.voltagedivider.FragmentYesNoDialog;
-import com.berthold.voltagedivider.GetThisAppsVersion;
 import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.util.ArrayList;
 
@@ -89,38 +97,35 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         mainViewModel.loc = loc;
 
         //
-        // Check if there is a newer version of this app available at the play store.
-        // todo: Not working anymore..... fix it!
+        // Check if there is a newer version of this app available at the play store
+        //
         if (CheckForNetwork.isNetworkAvailable(getApplicationContext())) {
-            if (showUpdateInfo()) {
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(10000);
-                        } catch (Exception e) {
+            final AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
+            // Returns an intent object that you use to check for an update.
+            final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+            appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
+                @Override
+                public void onSuccess(AppUpdateInfo result) {
+
+                    if (result.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
+                        // If an update was not installed for some time, check when the last
+                        // update info was shown. We so not want to tire the user :-)
+                        Log.v("UPDATEUPDATE","Hey, Update");
+                        if (showUpdateInfo()) {
+                            saveTimeUpdateInfoLastOpened();
+                            String dialogText = getResources().getString(R.string.dialog_new_version_available) + " ";
+                            String ok = getResources().getString(R.string.do_update_confirm_button);
+                            String cancel = getResources().getString(R.string.no_udate_button);
+                            showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
                         }
-
-                        String currentVersion = GetThisAppsVersion.thisVersion(getApplicationContext());
-                        String latestVersionInGooglePlay = mainViewModel.getAppVersionfromGooglePlay(getApplicationContext());
-
-                        // Only open when connection to Play Store was successful and
-                        // the latest version Info could be retrieved.....
-                        if (latestVersionInGooglePlay!="-") {
-                            if (!latestVersionInGooglePlay.equals(currentVersion)) {
-                                saveTimeUpdateInfoLastOpened();
-                                String dialogText = getResources().getString(R.string.dialog_new_version_available) + " " + latestVersionInGooglePlay;
-                                String ok = getResources().getString(R.string.do_update_confirm_button);
-                                String cancel = getResources().getString(R.string.no_udate_button);
-                                showConfirmDialog(CONFIRM_DIALOG_CALLS_BACK_FOR_UPDATE, FragmentYesNoDialog.SHOW_AS_YES_NO_DIALOG, dialogText.toString(), ok, cancel);
-                            }
-                        }
-
+                    } else {
+                        // No update available, user does not need to know....
                     }
-                });
-                t.start();
-            } else
-                Log.v("NETWORKNETWORK_", "No Network");
+                }
+            });
+        } else {
+            // No Network, user does not need to know....
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

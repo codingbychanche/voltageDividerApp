@@ -39,6 +39,12 @@
         ]]>
     </string>
 
+    <string name="version_info_update_available_short">
+     <![CDATA[
+        An update is available.
+        ]]>
+    </string>
+
     <string name="no_network">
      <![CDATA[
         No network, could not check app- version.

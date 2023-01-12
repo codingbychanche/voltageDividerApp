@@ -2,7 +2,6 @@ package com.berthold.voltagedivider;
 
 import android.os.AsyncTask;
 
-import org.jsoup.Jsoup;
 
 import java.io.IOException;
 
@@ -21,6 +20,7 @@ public class VersionChecker extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params) {
 
         // ToDO Change url when this app is available at the play store....
+        /*
         try {
             newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "com.berthold.voltagedivider" + "&hl=de")
                     .timeout(30000)
@@ -37,5 +37,8 @@ public class VersionChecker extends AsyncTask<String, String, String> {
             return "-";
         else
             return newVersion;
+
+         */
+        return "0";
     }
 }

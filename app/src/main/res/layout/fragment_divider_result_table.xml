@@ -33,7 +33,8 @@
 
     <Button
         android:id="@+id/share"
-        style="?android:attr/buttonBarButtonStyle"
+        style="@style/button"
+        app:icon="@android:drawable/ic_menu_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/share"
@@ -42,7 +43,8 @@
 
     <Button
         android:id="@+id/close_table_view"
-        style="?android:attr/buttonBarButtonStyle"
+        style="@style/button"
+        app:icon="@drawable/divider_schematic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back_to_find_new_div_res"

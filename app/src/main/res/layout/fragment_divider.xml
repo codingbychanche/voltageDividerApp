@@ -144,7 +144,8 @@
 
     <Button
         android:id="@+id/find_solution_for_divider"
-        style="?android:attr/buttonBarButtonStyle"
+        style="@style/button"
+        app:icon="@android:drawable/ic_menu_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/solve"
@@ -153,7 +154,8 @@
 
     <Button
         android:id="@+id/show_all_solutions_for_divider"
-        style="?android:attr/buttonBarButtonStyle"
+        style="@style/button"
+        app:icon="@android:drawable/ic_menu_agenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/show_all_solutions_for_divider"

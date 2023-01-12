@@ -18,6 +18,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.berthold.voltagedivider.Main.CheckForNetwork;
 import com.berthold.voltagedivider.Main.MainViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.UpdateAvailability;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -88,60 +94,32 @@ public class FragmentInfo extends Fragment {
         final String current = getResources().getConfiguration().locale.getLanguage();
 
         //
-        // Load according to locale
+        // Play core library
+        // Checks if there is a newer version of this app available.
         //
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        // todo: test of play core library
+        // This is a test....
+        //
+        if (CheckForNetwork.isNetworkAvailable(getActivity().getApplicationContext())) {
 
-                //
-                // Active network available?
-                //
-                //
-                // The following statement is true, when network is available, no ,matter if it is switched on or off!!!
-                // This statement is noo good if one wants to check if a network connection is possible....
-                if (CheckForNetwork.isNetworkAvailable(requireActivity().getApplicationContext())) {
-                    final String latestVersionInGooglePlay = getAppVersionfromGooglePlay(requireActivity().getApplicationContext());
+            final AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(requireActivity().getApplicationContext());
+            // Returns an intent object that you use to check for an update.
+            final Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+            appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
+                @Override
+                public void onSuccess(AppUpdateInfo result) {
+                    Log.v("UPDATEUPDATE","Invoked");
+                    if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                        updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available_short) +"", 0));
 
-                    if (latestVersionInGooglePlay != "-") {
-                        if (latestVersionInGooglePlay.equals(currentVersion)) {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //updateInfoView.setText(getResources().getText(R.string.version_info_is_latest_version));
-                                    updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_ok) + "", 0));
-                                }
-                            });
-
-                            // OK, could connect to network, could connect to google plays store listing of the app, get version.
-                        } else {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available) + latestVersionInGooglePlay, 0));
-                                }
-                            });
-                        }
-
-                    } else
-                        // Network was available but, could not retrieve version info from google plays store listing of this app.
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.no_version_info_available) + "", 0));
-                            }
-                        });
-                } else
-                    // No network connection available or network disabled on device.
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.no_network) + "", 0));
-                        }
-                    });
-            }
-        });
-        t.start();
+                    } else {
+                        updateInfoView.setText(getResources().getText(R.string.version_info_ok));
+                    }
+                }
+            });
+        } else {
+            updateInfoView.setText(getResources().getText(R.string.no_network));
+        }
 
         //
         // Show info text according to the current locale...

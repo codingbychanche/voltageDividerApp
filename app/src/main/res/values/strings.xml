@@ -49,18 +49,11 @@
     <!-- Info fragment -->
     <string name="version_info_update_available">Es ist eine neue Version dieser App verfügbar.</string>
     <string name="version" translatable="false">Version:</string>
+    <string name="version_info_update_available_short">Es ist eine neuere Version dieser App im Google Play Store verfügbar.</string>
 
-    <string name="no_network">
-     <![CDATA[
-        Kein Netzwerk, die aktuelle Version der App im Play Store, kann nicht ermittelt werden.
-        ]]>
-    </string>
+    <string name="no_network">Kein Netzwerk, die aktuelle Version der App im Play Store, kann nicht ermittelt werden.</string>
 
-    <string name="no_version_info_available">
-     <![CDATA[
-        Die aktuelle Version im Play Store konnte nicht ermittelt werden.
-        ]]>
-    </string>
+    <string name="no_version_info_available">Die aktuelle Version im Play Store konnte nicht ermittelt werden.</string>
 
     <string name="dialog_new_version_available" translatable="true">
         <![CDATA[<p><b>Neue Version verfügbar</b></p>
