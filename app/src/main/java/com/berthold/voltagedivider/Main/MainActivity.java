@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                 @Override
                 public void onSuccess(AppUpdateInfo result) {
 
-                    if (result.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
+                    if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                         // If an update was not installed for some time, check when the last
                         // update info was shown. We so not want to tire the user :-)
                         Log.v("UPDATEUPDATE","Hey, Update");
@@ -159,9 +159,9 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         });
 
         //
-        // Prepare list, containing the protocol for all calculations one
+        // Prepare list, containing the protocol for all calculations done
         //
-        ArrayList<String> protocolData=new ArrayList<>();
+        ArrayList<ProtocolData> protocolData=new ArrayList<>();
          protocolListView = findViewById(R.id.protocolListView);
 
         protocolListView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
@@ -174,10 +174,7 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         protocolListAdapter = new ProtocolListAdapter(protocolData);
         protocolListView.setAdapter(protocolListAdapter);
 
-
         enableSwipeToDeleteAndUndo();
-
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Observers
@@ -217,9 +214,9 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
         //
         //  Updates the protocol view
         //
-        mainViewModel.getProtocol().observe(this, new Observer<String>() {
+        mainViewModel.getProtocol().observe(this, new Observer<ProtocolData>() {
             @Override
-            public void onChanged(String s) {
+            public void onChanged(ProtocolData s) {
 
                 protocolData.add(s);
                 protocolListAdapter.notifyDataSetChanged();
@@ -228,6 +225,10 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
 
     }
 
+    /**
+     * Once a protocol row has been deleted, this snackbar is show enabling the use to
+     * make this step undone.....
+     */
     private void enableSwipeToDeleteAndUndo() {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
             @Override
@@ -235,14 +236,14 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
 
 
                 final int position = viewHolder.getAdapterPosition();
-                final String item = protocolListAdapter.getProtocolListData().get(position);
+                final ProtocolData item = protocolListAdapter.getProtocolListData().get(position);
 
                 protocolListAdapter.removeItem(position);
 
                 //@rem Shows how to create a snackbar with an action button@@
                 MotionLayout coordinatorLayout=findViewById(R.id.mainLayout);
                 Snackbar snackbar = Snackbar
-                        .make(coordinatorLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                        .make(coordinatorLayout, getResources().getString(R.string.ptotocol_entry_deleted), Snackbar.LENGTH_LONG);
                 snackbar.setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -251,11 +252,9 @@ public class MainActivity extends AppCompatActivity implements FragmentYesNoDial
                         protocolListView.scrollToPosition(position);
                     }
                 });
-
-                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.setActionTextColor(Color.GRAY);
                 snackbar.show();
                 //@@
-
             }
         };
 

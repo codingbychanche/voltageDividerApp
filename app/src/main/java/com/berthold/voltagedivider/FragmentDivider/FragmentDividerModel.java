@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.berthold.voltagedivider.Locale;
+import com.berthold.voltagedivider.Main.ProtocolData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +43,11 @@ public class FragmentDividerModel extends ViewModel {
     //
     // The best found solution.
     //
-    public MutableLiveData<String> bestSolutionFound;
+    public MutableLiveData<ProtocolData> bestSolutionFound;
 
-    public MutableLiveData<String> getBestSolutionFound() {
+    public MutableLiveData<ProtocolData> getBestSolutionFound() {
         if (bestSolutionFound == null)
-            bestSolutionFound = new MutableLiveData<String>();
+            bestSolutionFound = new MutableLiveData<ProtocolData>();
         return bestSolutionFound;
     }
 
@@ -194,8 +195,8 @@ public class FragmentDividerModel extends ViewModel {
 
                         if (result.hasResult()) {
                             bestSolutionFound.postValue(
-                                    buildSolutiontext(
-                                            result.getListOfResults().get(0))); // Best Result always on Top! Todo Why does result.getBest... not work????
+                                   new ProtocolData(buildSolutiontext(
+                                            result.getListOfResults().get(0)),ProtocolData.IS_DIVIDER_RESULT)); // Best Result always on Top! Todo Why does result.getBest... not work????
 
                             numberOfSolAndIndexOfCurrentlyShown.postValue(
                                     buildNumberOfSolFoundAndIndexOfCurrent(result));
@@ -203,7 +204,7 @@ public class FragmentDividerModel extends ViewModel {
                             allSolutionsFound.postValue(buildTextForAllResultsFound());
 
                         } else {
-                            bestSolutionFound.postValue(loc.getNoSolutionFound());
+                            bestSolutionFound.postValue(new ProtocolData(loc.getNoSolutionFound(),ProtocolData.IS_DIVIDER_RESULT));
                             numberOfSolAndIndexOfCurrentlyShown.postValue("0");
                         }
                     }
@@ -236,7 +237,7 @@ public class FragmentDividerModel extends ViewModel {
                                 "R<sub>2</sub>=" + r.getR2_V() + "&Omega; (E" + r.getR2FoundInSeries() + ")<br>" +
                                 "Nominal  V<sub>out</sub>="+r.getVoutNominal()+"V</p>"+
                                 "Max V<sub>out</sub>=" + r.getvOutMax_V() + "V &Delta;" + r.getDevFromMaxVoltage() + "V from anticipated<br>" +
-                                "Min V<sub>out</sub>=" + r.getvOutMin_V() + "V &Delta;" + r.getDevFromMinVoltage() + "V from anticipated<br>" + "Spread (max-min)=" + r.getErrorMargin() + "V");
+                                "Min V<sub>out</sub>=" + r.getvOutMin_V() + "V &Delta;" + r.getDevFromMinVoltage() + "V from anticipated<br>" + "Margin (max-min)=" + r.getErrorMargin() + "V");
                 solution.append("<p>");
 
             } else
@@ -282,14 +283,14 @@ public class FragmentDividerModel extends ViewModel {
         //
         // Produce a nice looking table in HTML....
         //
-        titleRow.add("<b>R1 found [&Omega;]</b>");
-        titleRow.add("<b>R2 found [&Omega;]</b>");
+        titleRow.add("<b>R<sub>1</sub> found [&Omega;]</b>");
+        titleRow.add("<b>R<sub>2</sub> found [&Omega;]</b>");
 
-        titleRow.add("<b>Vout nominal</b>");
+        titleRow.add("<b>V<sub>out</sub> nominal</b>");
 
-        titleRow.add("<b>Vout max [V]</b>");
+        titleRow.add("<b><V<sub>out</sub> max [V]</b>");
         titleRow.add("<b>Error margin [V]</b>");
-        titleRow.add("<b>Vout min [V]</b>");
+        titleRow.add("<b>V<sub>out,min</sub> [V]</b>");
 
         Table t = new Table("Divider Results", titleRow);
 

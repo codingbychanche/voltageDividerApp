@@ -43,8 +43,7 @@ public class FragmentInfo extends Fragment {
     private WebView webView;
     private ProgressBar progress;
 
-    // Version info
-    private String currentVersion;
+    boolean playStoreCouldnotbeContacted=true;
 
     // View model
     private MainViewModel mainViewModel;
@@ -85,10 +84,6 @@ public class FragmentInfo extends Fragment {
         //
         progress.setVisibility(View.VISIBLE);
 
-        // Get current App- version from Google play
-        // Check if there is an update available
-        currentVersion = GetThisAppsVersion.thisVersion(context);
-
         // @rem:Get current locale (determine language from Androids settings@@
         //final Locale current=getResources().getConfiguration().locale;
         final String current = getResources().getConfiguration().locale.getLanguage();
@@ -96,9 +91,6 @@ public class FragmentInfo extends Fragment {
         //
         // Play core library
         // Checks if there is a newer version of this app available.
-        //
-        // todo: test of play core library
-        // This is a test....
         //
         if (CheckForNetwork.isNetworkAvailable(getActivity().getApplicationContext())) {
 
@@ -108,7 +100,9 @@ public class FragmentInfo extends Fragment {
             appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
                 @Override
                 public void onSuccess(AppUpdateInfo result) {
-                    Log.v("UPDATEUPDATE","Invoked");
+
+                    playStoreCouldnotbeContacted=false;
+
                     if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                         updateInfoView.setText(HtmlCompat.fromHtml(getResources().getText(R.string.version_info_update_available_short) +"", 0));
 
@@ -120,6 +114,8 @@ public class FragmentInfo extends Fragment {
         } else {
             updateInfoView.setText(getResources().getText(R.string.no_network));
         }
+        if (playStoreCouldnotbeContacted)
+            updateInfoView.setText(getResources().getText(R.string.play_store_upate_info_not_possible));
 
         //
         // Show info text according to the current locale...
@@ -148,7 +144,6 @@ public class FragmentInfo extends Fragment {
                         Log.v("Info", io.toString());
                     }
 
-
                     //
                     // Show info text.
                     //
@@ -163,26 +158,5 @@ public class FragmentInfo extends Fragment {
             }
         });
         t2.start();
-    }
-
-    /**
-     * Returns the version from the app's Google Play store listing...
-     *
-     * @param c
-     * @return A String containing the version tag.
-     */
-    public String getAppVersionfromGooglePlay(Context c) {
-        String latest;
-
-
-        VersionChecker vc = new VersionChecker();
-
-        try {
-            latest = vc.execute().get();
-        } catch (Exception e) {
-            latest = "-";
-        }
-        return latest;
-
     }
 }

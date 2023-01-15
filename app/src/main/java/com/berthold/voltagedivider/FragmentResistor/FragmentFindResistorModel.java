@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.berthold.voltagedivider.Locale;
+import com.berthold.voltagedivider.Main.ProtocolData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,10 @@ public class FragmentFindResistorModel extends ViewModel {
     //
     // The found solution.
     //
-    public MutableLiveData<String> resistorValuefoundInAnyOfTheESeries_Ohm;
-    public MutableLiveData<String> getResistorValuefoundInAnyOfTheESeries_Ohm(){
+    public MutableLiveData<ProtocolData> resistorValuefoundInAnyOfTheESeries_Ohm;
+    public MutableLiveData<ProtocolData> getResistorValuefoundInAnyOfTheESeries_Ohm(){
         if(resistorValuefoundInAnyOfTheESeries_Ohm ==null)
-            resistorValuefoundInAnyOfTheESeries_Ohm =new MutableLiveData<String>();
+            resistorValuefoundInAnyOfTheESeries_Ohm =new MutableLiveData<ProtocolData>();
         return resistorValuefoundInAnyOfTheESeries_Ohm;
     }
 
@@ -62,11 +63,23 @@ public class FragmentFindResistorModel extends ViewModel {
             exclude.add(e96);
             ResistorResult rFound=GetResistors.getRValueClosestTo(r,e,exclude);
 
+
             if (rFound.found()) {
-                String solution = rFound.getFoundResistorValue_Ohms() + "&Omega;" + " E" + rFound.getESeries() + "   " + rFound.getActualError_P() + "%";
-                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(solution);
+
+                // toDo: Resistors library, in ResistorResult, add global method to determine max and min resistance
+                double maxR=(1+rFound.getSeriesSpecificErrorMargin()/100)*rFound.getFoundResistorValue_Ohms();
+                double minR=(1-rFound.getSeriesSpecificErrorMargin()/100)*rFound.getFoundResistorValue_Ohms();
+
+                String solution = loc.getResistorNominalText()+"="+rFound.getFoundResistorValue_Ohms() + "&Omega;" + " E" + rFound.getESeries() +
+                        "   (" + rFound.getActualError_P() + "%)<hr>"+
+                        loc.geteSeriesErrorMarginText()+" +/-"+rFound.getSeriesSpecificErrorMargin()+"%<br>"+
+                        loc.getResistanceMaxText()+"="+maxR+" &Omega;<br>"+
+                        loc.getResistanceMinText()+"="+minR+" &Omega;<br>";
+
+                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(new ProtocolData(solution,ProtocolData.IS_RESISTOR_RESULT));
+
             } else
-                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(loc.getNoSolutionFound());
+                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(new ProtocolData(loc.getNoSolutionFound(),ProtocolData.IS_RESISTOR_RESULT));
 
         } catch (NumberFormatException e){}
     }

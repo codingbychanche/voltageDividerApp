@@ -28,7 +28,27 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class Locale {
 
-    public String protocolStartText,noSolutionFoundText,searchingText,showingText;
+    public String protocolStartText;
+    public String noSolutionFoundText;
+    public String searchingText;
+    public String showingText;
+    public String resistorNominalText;
+    public String resistanceMaxText;
+    public String resistanceMinText;
+
+    public String geteSeriesErrorMarginText() {
+        return eSeriesErrorMarginText;
+    }
+
+    public String getNoSolutionFoundText() {
+        return noSolutionFoundText;
+    }
+
+    public void seteSeriesErrorMarginText(String eSeriesErrorMarginText) {
+        this.eSeriesErrorMarginText = eSeriesErrorMarginText;
+    }
+
+    public String eSeriesErrorMarginText;
 
     public void setNoSolutionFoundText(String noSolutionFoundText){
         this.noSolutionFoundText=noSolutionFoundText;
@@ -59,5 +79,29 @@ public class Locale {
 
     public void setShowingText(String showingText) {
         this.showingText = showingText;
+    }
+
+    public String getResistorNominalText() {
+        return resistorNominalText;
+    }
+
+    public void setResistorNominalText(String resistorNominalText) {
+        this.resistorNominalText = resistorNominalText;
+    }
+
+    public String getResistanceMaxText() {
+        return resistanceMaxText;
+    }
+
+    public void setResistanceMaxText(String resistanceMaxText) {
+        this.resistanceMaxText = resistanceMaxText;
+    }
+
+    public String getResistanceMinText() {
+        return resistanceMinText;
+    }
+
+    public void setResistanceMinText(String resistanceMinText) {
+        this.resistanceMinText = resistanceMinText;
     }
 }

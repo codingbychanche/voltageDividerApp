@@ -2,7 +2,8 @@
     <string name="action_settings" translatable="false">Settings</string>
 
     <!-- String literals used in suorce code, inside the view models which have no access to Android resources....-->
-    <string name="protocol_start_text">Protokoll.......</string>
+    <string name="protocol_start_text">Alle Ergebnisse werden hier protokolliert. Um einen Eintrag zu löschen, wischen Sie ihn einfach auf die rechte Seite.</string>
+    <string name="ptotocol_entry_deleted">Der Eintrag wurde gelöscht.</string>
     <string name="no_solution">Keine Lösung gefunden....</string>
     <string name="searching">Suche.....</string>
     <string name="showing">Beste Lösung von insgesammt:</string>
@@ -19,10 +20,14 @@
     <string name="input_resistor_value_hint">Wiederstand [Ohm]</string>
     <string name="output_standard_res_value_and_series">Standard Wiederstand/ E- Reihe</string>
     <string name="input_error_in_percent_hint">Zugelassene Abw. in %</string>
-    <string name="allowed_deviation">zugelassene Abweichung</string>
+    <string name="allowed_deviation">Zugelassene Abweichung</string>
     <string name="calc_button">Finde...</string>
     <string name="searched_was_text">Gesucht wurde</string>
-    <string name="solution_count_hint">Gefundene Löungen....</string>
+
+    <string name="resistor_nominel_text">Nominell</string>
+    <string name="resistance_max">Maximaler Wert</string>
+    <string name="resistance_min">Minimaler Wert</string>
+    <string name="e_series_error_margin">Serien spezifischer Fehler</string>
 
     <!-- Fragment Divider -->
     <string name="titel_divider">Spannungsteiler</string>
@@ -31,14 +36,14 @@
     <string name="vout_hint" translatable="false">Vout [Volt]</string>
     <string name="error_r2_hint">R2 [Ohm], zulässige abw. %</string>
     <string name="solve">Lösen</string>
-    <string name="show_next_sol" translatable="false">+</string>
-    <string name="show_last_sol" translatable="false">-</string>
     <string name="solution_hint">Lösung......</string>
     <string name="exclude_info_text">Ohne:</string>
     <string name="show_all_solutions_for_divider">Zeige alle Lösungen</string>
     <string name="show_all_subtitle">Alle Lösungen</string>
     <string name="share">Teilen</string>
     <string name="back_to_find_new_div_res">Zurück, neue Lösung..</string>
+    <string name="solution_count_hint">Gefundene Löungen....</string>
+    <string name="share_all_sol_tooltip">Lösungen als HTML im Clipboard speichern</string>
 
 
     <!-- Fragment Protocol -->
@@ -66,6 +71,8 @@
 
         Neue Version:]]>
     </string>
+
+    <string name="play_store_upate_info_not_possible">Es konnte keine Information zu bestehenden Updates aus dem Play Store abgerufen werden.</string>
 
     <string name="do_update_confirm_button" translatable="false">Update</string>
     <string name="no_udate_button">Nein,danke</string>

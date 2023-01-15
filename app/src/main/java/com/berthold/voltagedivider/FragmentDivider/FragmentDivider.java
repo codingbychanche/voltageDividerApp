@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.berthold.voltagedivider.HTMLTools;
 import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.Main.MainViewModel;
+import com.berthold.voltagedivider.Main.ProtocolData;
 import com.berthold.voltagedivider.R;
 
 public class FragmentDivider extends Fragment {
@@ -196,17 +197,13 @@ public class FragmentDivider extends Fragment {
             }
         });
 
-
-
-
-        fragmentDividerModel.getBestSolutionFound().observe(getViewLifecycleOwner(), new Observer<String>() {
+        fragmentDividerModel.getBestSolutionFound().observe(getViewLifecycleOwner(), new Observer<ProtocolData>() {
             @Override
-            public void onChanged(String s) {
+            public void onChanged(ProtocolData s) {
                 //dividerResultView.setText(HtmlCompat.fromHtml(s, 0));
 
                 if (isNewSolution) {
-                    //todo Change, once protocol list works...   mainViewModel.protokollOutput.setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
-                    mainViewModel.getProtocol().setValue(HTMLTools.makeSolutionBlockSolutionFound(s));
+                    mainViewModel.getProtocol().setValue(s);
                     isNewSolution = false;
                 }
             }

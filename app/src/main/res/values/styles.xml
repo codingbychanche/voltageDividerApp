@@ -13,25 +13,35 @@
     </style>
 
     <style name="HighlightedText" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
 
     <style name="TextBody" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
 
     <style name="button" parent="Widget.Material3.Button.ElevatedButton.Icon">
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">12dp</item>
         <item name="android:textStyle">bold</item>
-
     </style>
 
+    <!--@rem:Shows how one can customize a material design text
+        input field:Material Design, Text Input.
+
+        Hint: There is no need to specify the 'app'- namespace@@
+        -->
+    <style name="textInput">
+        <item name="android:textColor">@color/black</item>
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="hintTextColor">@color/black</item>
+    </style>
 
     <style name="DialogBoxTextBody" parent="TextAppearance.AppCompat">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
 </resources>

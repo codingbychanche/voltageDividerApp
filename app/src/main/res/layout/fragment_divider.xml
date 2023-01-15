@@ -34,9 +34,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:scaleType="fitCenter"
-
-
-
         android:src="@drawable/divider_schematic"
         app:layout_constraintBottom_toBottomOf="@+id/vout_value_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,10 +96,10 @@
         android:text="E96"
         app:layout_constraintStart_toEndOf="@+id/exclude_e48"
         app:layout_constraintTop_toBottomOf="@+id/exclude_info_text" />
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vin_value_layout"
+
+        style="@style/textInput"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -125,6 +122,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vout_value_layout"
+
+        style="@style/textInput"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintHorizontal_weight="6"

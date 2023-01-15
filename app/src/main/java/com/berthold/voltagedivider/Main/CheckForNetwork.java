@@ -21,7 +21,6 @@ import android.net.ConnectivityManager;
  * @returns True if a network is connected, false if not....
  */
 public class CheckForNetwork {
-    // ToDo Check if this works......
     public static boolean isNetworkAvailable(final Context context) {
         return ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
     }

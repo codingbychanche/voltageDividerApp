@@ -85,8 +85,6 @@ public class FragmentYesNoDialog extends DialogFragment {
     // This is the interface used to pass data from the
     // fragment to it's activity
     //
-    // todo: remove data!
-    //
     public interface getDataFromFragment{
         void getDialogInput(int reqCode, String dialogText, String buttonPressed);
     }

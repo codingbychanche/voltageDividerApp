@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.Main.MainViewModel;
+import com.berthold.voltagedivider.Main.ProtocolData;
 import com.berthold.voltagedivider.R;
 
 //import VoltageDiv.GetResistors;
@@ -56,7 +57,12 @@ public class FragmentFindResistor extends Fragment {
         // Locale for use in view models
         //
         Locale loc = new Locale();
-        loc.noSolutionFoundText = requireActivity().getResources().getString(R.string.no_solution);
+        loc.setNoSolutionFoundText(requireActivity().getResources().getString(R.string.no_solution));
+        loc.seteSeriesErrorMarginText(requireActivity().getResources().getString(R.string.e_series_error_margin));
+        loc.setResistanceMinText(requireActivity().getResources().getString(R.string.resistance_min));
+        loc.setResistanceMaxText(requireActivity().getResources().getString(R.string.resistance_max));
+        loc.setResistorNominalText(requireActivity().getResources().getString(R.string.resistor_nominel_text));
+
         fragmentFindResistorModel.loc = loc;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,22 +103,21 @@ public class FragmentFindResistor extends Fragment {
         //
         // Displays the result, the standard value of the resistor found...
         //
-        fragmentFindResistorModel.getResistorValuefoundInAnyOfTheESeries_Ohm().observe(getViewLifecycleOwner(), new Observer<String>() {
+        fragmentFindResistorModel.getResistorValuefoundInAnyOfTheESeries_Ohm().observe(getViewLifecycleOwner(), new Observer<ProtocolData>() {
             @Override
-            public void onChanged(String s) {
+            public void onChanged(ProtocolData s) {
 
-                //standardValueAndSeriesView.setText(HtmlCompat.fromHtml(s, 0));
-
-                // Protocol output
+                //
+                // The result ist written to the protocol directly....
+                //
 
                 if (isNewSolution) {
                     String sol = "<b>" + getResources().getString(R.string.searched_was_text)+" "
-                            + resitorValueInputView.getText().toString() + "&Omega; " +
+                            + resitorValueInputView.getText().toString() + "&Omega;<br>" +
                             getResources().getString(R.string.allowed_deviation)+":"
-                            + errorInPercentView.getText() + "%</b><br>";
+                            + errorInPercentView.getText() + "%</b><br><hr>";
 
-
-                    mainViewModel.getProtocol().setValue(sol + "=" + s + "<p>");
+                    mainViewModel.getProtocol().setValue(new ProtocolData(sol + s.getSolutionString() + "<p>",ProtocolData.IS_RESISTOR_RESULT));
                     isNewSolution = false;
                 }
             }

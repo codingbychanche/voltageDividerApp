@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Voltage Divider</string>
-    <string name="protocol_start_text">Protocol</string>
+    <string name="protocol_start_text">All results will be saved here. To delete an entry simply swipe it to the left.</string>
+    <string name="ptotocol_entry_deleted">The entry has been deleted</string>
     <string name="no_solution">No solution found</string>
     <string name="searching">Searching....</string>
     <string name="showing">Showing best solution of:</string>
@@ -32,6 +33,12 @@
     <string name="show_all_subtitle">All possible solutions</string>
     <string name="share">Share</string>
     <string name="back_to_find_new_div_res">Back, find new solution..</string>
+    <string name="resistor_nominel_text">Nominal</string>
+    <string name="resistance_max">Max</string>
+    <string name="resistance_min">Min</string>
+    <string name="e_series_error_margin">E- series specific error margin</string>
+    <string name="share_all_sol_tooltip">Copy solution as HTML into the clipboard</string>
+
     <!-- Info activity -->
     <string name="dialog_new_version_available">
      <![CDATA[
@@ -56,4 +63,8 @@
         Could not retrieve version info from Play Store.
         ]]>
     </string>
+
+
+    <string name="play_store_upate_info_not_possible">Could not get update info from Play Store</string>
+
 </resources>

@@ -5,33 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    card_view:cardBackgroundColor="#F3EA9F"
-
-
     card_view:cardCornerRadius="8dp"
     card_view:cardElevation="2dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rowLayout"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--
-        <TextView
-            android:id="@+id/protocalEntryView"
-            android:layout_centerVertical="true"
-            android:paddingStart="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Empty" />
-            -->
+        <ImageView
+            android:id="@+id/infoIcon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignStart="@+id/protocalEntryView"
+            android:src="@drawable/resistor"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"></ImageView>
 
         <WebView
             android:id="@+id/protocalEntryView"
 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:paddingStart="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@+id/infoIcon"
+            card_view:layout_constraintRight_toRightOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

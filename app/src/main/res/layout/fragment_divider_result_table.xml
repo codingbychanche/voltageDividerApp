@@ -34,6 +34,7 @@
     <Button
         android:id="@+id/share"
         style="@style/button"
+        android:tooltipText="@string/share_all_sol_tooltip"
         app:icon="@android:drawable/ic_menu_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
