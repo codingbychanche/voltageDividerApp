@@ -19,4 +19,8 @@ Find best solution for R1 and R2 of a voltage divider. Resistors, resulting outp
 
 Each result will be saved inside a protocol text which facilitates the evaluation of different variants testet.The text can also be shared with other App's
 
+
+![](screenshots/En/all_solutions.png)
+
+
 Have fun.
