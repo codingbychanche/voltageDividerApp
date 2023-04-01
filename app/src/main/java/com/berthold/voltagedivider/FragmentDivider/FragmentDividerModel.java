@@ -267,7 +267,7 @@ public class FragmentDividerModel extends ViewModel {
         solution.append("Anticipated output Voltage V<sub>out</sub>="+result.getOutputVoltage_V()+"V<br>");
         solution.append("</p>");
 
-        List <Integer> excludedSeries=result.getListOfResults().get(0).getIncludedSeries();
+        List <Integer> excludedSeries=result.getListOfResults().get(0).getSeriesExcluded();
         if(excludedSeries!=null) {
             if (excludedSeries.size() == 0)
                 solution.append("All standard series E3 - E96 are included in this solution</p>");

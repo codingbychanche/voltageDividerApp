@@ -45,7 +45,6 @@ public class FragmentFindResistorModel extends ViewModel {
             double r=Double.valueOf(resistorValue_Ohm);
             double e=Double.valueOf(tolerableErrorIn_P);
 
-
             List<Integer> exclude=new ArrayList<>();
 
             int e3=0;
@@ -61,25 +60,26 @@ public class FragmentFindResistorModel extends ViewModel {
             exclude.add(e24);
             exclude.add(e48);
             exclude.add(e96);
-            ResistorResult rFound=GetResistors.getRValueClosestTo(r,e,exclude);
+            List <ResistorResult> listOfResistorsFound=GetResistors.getRValueClosestTo(r,e,exclude);
+            ResistorResult resistorResult=listOfResistorsFound.get(0);
 
 
-            if (rFound.found()) {
-
-                // toDo: Resistors library, in ResistorResult, add global method to determine max and min resistance
-                double maxR=(1+rFound.getSeriesSpecificErrorMargin()/100)*rFound.getFoundResistorValue_Ohms();
-                double minR=(1-rFound.getSeriesSpecificErrorMargin()/100)*rFound.getFoundResistorValue_Ohms();
-
-                String solution = loc.getResistorNominalText()+"="+rFound.getFoundResistorValue_Ohms() + "&Omega;" + " E" + rFound.getESeries() +
-                        "   (" + rFound.getActualError_P() + "%)<hr>"+
-                        loc.geteSeriesErrorMarginText()+" +/-"+rFound.getSeriesSpecificErrorMargin()+"%<br>"+
-                        loc.getResistanceMaxText()+"="+maxR+" &Omega;<br>"+
-                        loc.getResistanceMinText()+"="+minR+" &Omega;<br>";
-
-                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(new ProtocolData(solution,ProtocolData.IS_RESISTOR_RESULT));
-
-            } else
+            if (listOfResistorsFound.isEmpty()) {
                 resistorValuefoundInAnyOfTheESeries_Ohm.setValue(new ProtocolData(loc.getNoSolutionFound(),ProtocolData.IS_RESISTOR_RESULT));
+
+            } else {
+                // toDo: Resistors library, in ResistorResult, add global method to determine max and min resistance
+                double maxR = (1 + resistorResult.getSeriesSpecificErrorMargin() / 100) * resistorResult.getFoundResistorValue_Ohms();
+                double minR = (1 - resistorResult.getSeriesSpecificErrorMargin() / 100) * resistorResult.getFoundResistorValue_Ohms();
+
+                String solution = loc.getResistorNominalText() + "=" + resistorResult.getFoundResistorValue_Ohms() + "&Omega;" + " E" +resistorResult.getESeries() +
+                        "   (" + resistorResult.getActualError_P() + "%)<hr>" +
+                        loc.geteSeriesErrorMarginText() + " +/-" + resistorResult.getSeriesSpecificErrorMargin() + "%<br>" +
+                        loc.getResistanceMaxText() + "=" + maxR + " &Omega;<br>" +
+                        loc.getResistanceMinText() + "=" + minR + " &Omega;<br>";
+
+                resistorValuefoundInAnyOfTheESeries_Ohm.setValue(new ProtocolData(solution, ProtocolData.IS_RESISTOR_RESULT));
+            }
 
         } catch (NumberFormatException e){}
     }
