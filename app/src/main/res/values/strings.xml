@@ -5,8 +5,8 @@
     <string name="protocol_start_text">Alle Ergebnisse werden hier protokolliert. Um einen Eintrag zu löschen, wischen Sie ihn einfach auf die rechte Seite.</string>
     <string name="ptotocol_entry_deleted">Der Eintrag wurde gelöscht.</string>
     <string name="no_solution">Keine Lösung gefunden....</string>
-    <string name="searching">Suche.....</string>
-    <string name="showing">Beste Lösung von insgesammt:</string>
+    <string name="searching">\?</string>
+    <string name="showing"></string>
 
     <!-- Main -->
     <!-- Strings used for fragments for navigation -->

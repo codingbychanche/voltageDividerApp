@@ -59,33 +59,33 @@
 
     <CheckBox
         android:id="@+id/exclude_e6"
-        android:text="E6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="E6"
         app:layout_constraintStart_toEndOf="@+id/exclude_e3"
         app:layout_constraintTop_toTopOf="@+id/exclude_e12" />
 
     <CheckBox
         android:id="@+id/exclude_e12"
-        android:text="E12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="E12"
         app:layout_constraintStart_toEndOf="@+id/exclude_e6"
         app:layout_constraintTop_toTopOf="@+id/exclude_e24" />
 
     <CheckBox
         android:id="@+id/exclude_e24"
-        android:text="E24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="E24"
         app:layout_constraintStart_toEndOf="@+id/exclude_e12"
         app:layout_constraintTop_toTopOf="@+id/exclude_e48" />
 
     <CheckBox
         android:id="@+id/exclude_e48"
-        android:text="E48"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="E48"
         app:layout_constraintStart_toEndOf="@+id/exclude_e24"
         app:layout_constraintTop_toTopOf="@+id/exclude_e96" />
 
@@ -96,6 +96,7 @@
         android:text="E96"
         app:layout_constraintStart_toEndOf="@+id/exclude_e48"
         app:layout_constraintTop_toBottomOf="@+id/exclude_info_text" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/vin_value_layout"
 
@@ -145,31 +146,41 @@
     <Button
         android:id="@+id/find_solution_for_divider"
         style="@style/button"
-        app:icon="@android:drawable/ic_menu_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/solve"
+        app:icon="@android:drawable/ic_menu_search"
         app:layout_constraintStart_toStartOf="@+id/vout_value_layout"
         app:layout_constraintTop_toBottomOf="@+id/exclude_e3"></Button>
 
-    <Button
-        android:id="@+id/show_all_solutions_for_divider"
-        style="@style/button"
-        app:icon="@android:drawable/ic_menu_agenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_all_solutions_for_divider"
-        app:layout_constraintStart_toEndOf="@+id/find_solution_for_divider"
-        app:layout_constraintTop_toTopOf="@+id/find_solution_for_divider"></Button>
 
-    <TextView
-        android:id="@+id/solution_counter"
-        style="@style/TextBody"
+    <RelativeLayout
+        android:id="@+id/find_solution_for_divider_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/solution_count_hint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
+        android:layout_marginStart="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/find_solution_for_divider"
+        app:layout_constraintStart_toEndOf="@+id/find_solution_for_divider">
+
+        <Button
+            android:id="@+id/show_all_solutions_for_divider"
+            style="@style/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_all_solutions_for_divider"
+            app:icon="@android:drawable/ic_menu_agenda"></Button>
+
+        <TextView
+            android:id="@+id/solution_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/show_all_solutions_for_divider"
+            android:background="@drawable/badge"
+            android:textColor="#ffffff"
+            android:textSize="10dp"
+            android:textStyle="bold"></TextView>
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progress_searching_divider"

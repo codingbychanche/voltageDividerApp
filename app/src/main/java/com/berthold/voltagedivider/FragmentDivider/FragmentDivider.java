@@ -22,6 +22,8 @@ import com.berthold.voltagedivider.Locale;
 import com.berthold.voltagedivider.Main.MainViewModel;
 import com.berthold.voltagedivider.Main.ProtocolData;
 import com.berthold.voltagedivider.R;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 
 public class FragmentDivider extends Fragment {
 
@@ -80,6 +82,7 @@ public class FragmentDivider extends Fragment {
         // Solve the divider and show best solution found.
         //
         Button solve = view.findViewById(R.id.find_solution_for_divider);
+
         solve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

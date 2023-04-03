@@ -205,7 +205,7 @@ public class FragmentDividerModel extends ViewModel {
 
                         } else {
                             bestSolutionFound.postValue(new ProtocolData(loc.getNoSolutionFound(),ProtocolData.IS_DIVIDER_RESULT));
-                            numberOfSolAndIndexOfCurrentlyShown.postValue("0");
+                            numberOfSolAndIndexOfCurrentlyShown.postValue("00");
                         }
                     }
                 } catch (NumberFormatException e) {
