@@ -4,8 +4,8 @@
     <string name="protocol_start_text">All results will be saved here. To delete an entry simply swipe it to the left.</string>
     <string name="ptotocol_entry_deleted">The entry has been deleted</string>
     <string name="no_solution">No solution found</string>
-    <string name="searching">Searching....</string>
-    <string name="showing">Showing best solution of:</string>
+    <string name="searching">\?</string>
+    <string name="showing"></string>
     <string name="find_resistor">Resistor</string>
     <string name="divider">Voltage Divider</string>
     <string name="protocol_info">Protocol started</string>

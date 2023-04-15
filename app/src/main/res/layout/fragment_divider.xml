@@ -174,8 +174,11 @@
             android:id="@+id/solution_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/show_all_solutions_for_divider"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="160dp"
             android:background="@drawable/badge"
+            android:elevation="1dp"
+            android:text="99"
             android:textColor="#ffffff"
             android:textSize="10dp"
             android:textStyle="bold"></TextView>
